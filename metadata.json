@@ -1,0 +1,6 @@
+{
+  "name": "Carrier Shield Compliance LLC",
+  "description": "Next-generation fleet safety and DOT compliance platform. Smarter data, lower liability, and safer drivers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
