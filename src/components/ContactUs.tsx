@@ -13,7 +13,7 @@ export default function ContactUs() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: import("react").FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     

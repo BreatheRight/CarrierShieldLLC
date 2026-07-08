@@ -9,7 +9,7 @@ interface HeroSectionProps {
 export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
   const [quickEmail, setQuickEmail] = useState("");
 
-  const handleQuickSubmit = (e: React.FormEvent) => {
+  const handleQuickSubmit = (e: import("react").FormEvent) => {
     e.preventDefault();
     onOpenDemo();
   };
@@ -30,15 +30,14 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
           <div className="lg:col-span-6 space-y-6 md:space-y-8">
             
             {/* Headline */}
-            <h1 className="font-display text-4xl md:text-5xl lg:text-[64px] leading-[1] font-extrabold tracking-tight text-white">
-              <span className="text-[#38bdf8]">Smarter</span> Compliance.<br />
-              Lower Liability.<br />
-              <span className="text-[#38bdf8]">Safer</span> Drivers.
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.1] font-extrabold tracking-tight text-white">
+              Your Shield Against <br />
+              <span className="text-[#38bdf8]">FMCSA Compliance</span> Risks
             </h1>
 
             {/* Description */}
             <p className="text-slate-300 text-base md:text-md leading-relaxed max-w-xl">
-              Carrier Shield Compliance LLC handles all the complex and time-consuming aspects of FMCSA, DOT, CSA, Drug & Alcohol programs, and permitting — so you can drive growth without the stress of compliance risks. Launching a new carrier? We provide full New Carrier Launch support: USDOT + MC Authority, BOC-3, UCR, IFTA, state permits, Clearinghouse enrollment, New Entrant Audit preparation, truck/trailer files, and ongoing compliance management with dedicated dashboards and monthly reports.
+              Carrier Shield Compliance LLC is your complete outsourced Safety & Compliance Department for trucking companies and expanding fleets. We handle all the complex and time-consuming aspects of FMCSA, DOT, CSA, Drug & Alcohol programs, and permitting — so you can drive growth without the stress of compliance risks. We also partner with trusted insurance providers to deliver full coverage for your fleet. Launching a new carrier? We provide full New Carrier Launch supports.
             </p>
 
             {/* Interactive Lead-Capture Input */}

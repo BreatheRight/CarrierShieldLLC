@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChecklistCheck } from "lucide-react"; // Wait, ChecklistCheck might not exist, let's use ClipboardCheck or CheckSquare
+import { ListCheck } from "lucide-react"; // Wait, ListCheck might not exist, let's use ClipboardCheck or CheckSquare
 import { ClipboardCheck, Sparkles, AlertTriangle, CheckCircle2, ShieldAlert, ArrowRight } from "lucide-react";
 
 interface Question {

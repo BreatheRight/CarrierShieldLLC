@@ -1,11 +1,12 @@
-import { Truck, Mail, Phone, MapPin, ShieldAlert, HeartHandshake, FileText, Globe } from "lucide-react";
+import { Truck, Mail, Phone, MapPin, ShieldAlert, HeartHandshake, FileText, Globe, Facebook, Instagram, Linkedin } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
   const [newsEmail, setNewsEmail] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleNewsSubmit = (e: React.FormEvent) => {
+  const handleNewsSubmit = (e: import("react").FormEvent) => {
     e.preventDefault();
     setSuccess(true);
     setNewsEmail("");
@@ -14,30 +15,30 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
 
   const navLinks = [
     {
-      title: "Compliance Products",
+      title: "Navigation",
       items: [
-        { label: "Driver Qualification Suite", href: "#" },
-        { label: "Hours of Service (HOS) Audits", href: "#" },
-        { label: "FMCSA Drug Selection pool", href: "#" },
-        { label: "Online Driver Portal", href: "#" },
+        { label: "Home", href: "/" },
+        { label: "Why Us?", href: "/#why-us" },
+        { label: "Resources", href: "/resources" },
+        { label: "Contact Us", href: "/contact" },
       ],
     },
     {
-      title: "Solutions",
+      title: "Services",
       items: [
-        { label: "Fleet size 5-20", href: "#" },
-        { label: "Fleet size 21-100", href: "#" },
-        { label: "Enterprise Logistics", href: "#" },
-        { label: "Insurance Premium Reduction", href: "#" },
+        { label: "All Services", href: "/services" },
+        { label: "Remote Safety & Compliance", href: "/remote-safety-compliance" },
+        { label: "Permits & Registration", href: "/contact" },
+        { label: "New Carrier Launch", href: "/contact" },
       ],
     },
     {
       title: "Regulatory Resources",
       items: [
-        { label: "DQ File Checklist (CFR 391)", href: "#" },
-        { label: "ELD Mandate Guide", href: "#" },
-        { label: "Clearinghouse 101 Manual", href: "#" },
-        { label: "Help Center Help Desk", href: "#" },
+        { label: "DQ File Checklist (CFR 391)", href: "/resources" },
+        { label: "ELD Mandate Guide", href: "/resources" },
+        { label: "Clearinghouse 101 Manual", href: "/resources" },
+        { label: "Help Center Help Desk", href: "/resources" },
       ],
     },
   ];
@@ -51,14 +52,14 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
           
           {/* Logo brand pitch */}
           <div className="lg:col-span-4 space-y-4">
-            <a href="#" className="flex items-center gap-2 group">
+            <Link to="/" className="flex items-center gap-2 group">
               <div className="bg-gradient-to-tr from-sky-400 to-sky-600 p-2 rounded-lg text-[#030d1b] font-bold">
                 <Truck className="h-5 w-5" />
               </div>
-              <span className="font-display text-lg font-bold tracking-tight text-white">
-                CARRIER<span className="text-sky-400">SHIELD</span>
+              <span className="font-display text-lg font-bold tracking-tight text-white uppercase">
+                VALORA
               </span>
-            </a>
+            </Link>
             
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
               Your trucking partner, with 20+ years specializing in safety infrastructure, FMCSA compliance, CSA risk reduction, audit preparation, and fleet operational support for growing trucking companies across the United States.
@@ -67,16 +68,28 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
             <div className="space-y-2 pt-2 text-xs">
               <div className="flex items-center gap-2">
                 <Phone size={13} className="text-sky-400" />
-                <span className="text-slate-300"><a href="tel:+17187185395" className="hover:text-white transition-colors">+1 (718) 718-5395</a></span>
+                <span className="text-slate-300"><a href="tel:+17189188373" className="hover:text-white transition-colors">+1 (718) 918-8373</a></span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail size={13} className="text-sky-400" />
-                <span className="text-slate-300"><a href="mailto:support@nationalsolutions.com" className="hover:text-white transition-colors">support@nationalsolutions.com</a></span>
+                <span className="text-slate-300"><a href="mailto:support@valora.com" className="hover:text-white transition-colors">support@valora.com</a></span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin size={13} className="text-sky-400" />
-                <span className="text-slate-300">100 Fleet St, Brooklyn, NY 11204</span>
+                <span className="text-slate-300">424 Oceanic Pkwy, Brooklyn, NY 11225</span>
               </div>
+            </div>
+
+            <div className="flex items-center gap-4 pt-4">
+              <a href="#" aria-label="Facebook" className="text-slate-500 hover:text-white transition-colors">
+                <Facebook size={18} />
+              </a>
+              <a href="#" aria-label="Instagram" className="text-slate-500 hover:text-white transition-colors">
+                <Instagram size={18} />
+              </a>
+              <a href="#" aria-label="LinkedIn" className="text-slate-500 hover:text-white transition-colors">
+                <Linkedin size={18} />
+              </a>
             </div>
           </div>
 
@@ -90,16 +103,25 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
                 <ul className="space-y-2 text-xs">
                   {col.items.map((link) => (
                     <li key={link.label}>
-                      <a 
-                        href={link.href} 
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onOpenDemo();
-                        }}
-                        className="hover:text-white transition-colors"
-                      >
-                        {link.label}
-                      </a>
+                      {link.href.startsWith("/") ? (
+                        <Link 
+                          to={link.href}
+                          className="hover:text-white transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      ) : (
+                        <a 
+                          href={link.href} 
+                          onClick={(e) => {
+                            e.preventDefault();
+                            onOpenDemo();
+                          }}
+                          className="hover:text-white transition-colors"
+                        >
+                          {link.label}
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -164,7 +186,7 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
 
         {/* Lower Disclaimer */}
         <div className="mt-6 border-t border-blue-950/20 pt-4 text-center text-[10px] text-slate-600">
-          <p>© {new Date().getFullYear()} Carrier Shield Compliance LLC. All rights reserved. Google AI Studio, Cloud Run, and associated marks are trademarks of their respective owners. DOT is a registered acronym of the Department of Transportation.</p>
+          <p>© {new Date().getFullYear()} Valora. All rights reserved. Google AI Studio, Cloud Run, and associated marks are trademarks of their respective owners. DOT is a registered acronym of the Department of Transportation.</p>
         </div>
 
       </div>
