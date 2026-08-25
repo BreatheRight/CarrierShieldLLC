@@ -41,11 +41,11 @@ export default function TopUtilityBar({ onOpenDemo }: TopUtilityBarProps) {
         {/* Support & Direct Line */}
         <div className="flex items-center gap-4">
           <a 
-            href="tel:+18005550199" 
+            href="tel:+12012937774" 
             className="flex items-center gap-1.5 font-medium hover:text-white transition-colors"
           >
             <Phone size={11} className="text-sky-400" />
-            <span>24/7 DOT Support: <span className="font-mono font-bold text-slate-200 hover:text-[#38bdf8]">(800) 555-0199</span></span>
+            <span>24/7 DOT Support: <span className="font-mono font-bold text-slate-200 hover:text-[#38bdf8]">+1 (201) 293-7774</span></span>
           </a>
           <span className="hidden sm:inline-block w-px h-3 bg-slate-800" />
           <div className="hidden sm:flex items-center gap-1.5 text-slate-400">

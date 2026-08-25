@@ -9,7 +9,7 @@ export default function ServicesPage() {
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-sky-500/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 text-center max-w-4xl">
           <h1 className="font-display text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
-            Valora Compliance Services
+            Fleet Integra Compliance Services
           </h1>
           <div className="flex justify-center">
             <Link to="/pricing" className="inline-flex items-center gap-2 rounded-lg bg-slate-900 border border-slate-800 px-6 py-3 text-sm font-semibold text-sky-400 hover:bg-slate-800 transition shadow-sm">

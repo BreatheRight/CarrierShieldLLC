@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" width="800" height="650" style="background: #020617;">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="40%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#082f49" />
+    </linearGradient>
+    <linearGradient id="shieldInner" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#0b192c" />
+      <stop offset="100%" stop-color="#030712" />
+    </linearGradient>
+    <linearGradient id="fiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="streakGrad1" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0" />
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Speed Light Streaks -->
+  <path d="M 100,420 C 120,300 240,160 400,100 C 560,160 680,300 700,420" fill="none" stroke="#38bdf8" stroke-width="6" opacity="0.75" filter="url(#glow)" />
+  <path d="M 60,390 C 160,480 250,510 400,510 C 550,510 640,480 740,390" fill="none" stroke="#0284c7" stroke-width="4" opacity="0.6" filter="url(#glow)" />
+  
+  <!-- Outer Shield Border -->
+  <path d="M 400,40 Q 560,70 610,120 C 610,320 530,450 400,510 C 270,450 190,320 190,120 Q 240,70 400,40 Z" 
+        fill="url(#shieldInner)" stroke="url(#shieldGrad)" stroke-width="16" filter="url(#glow)" />
+
+  <!-- Inner Shield Accent Rim -->
+  <path d="M 400,65 Q 540,92 585,135 C 585,305 515,425 400,480 C 285,425 215,305 215,135 Q 260,92 400,65 Z" 
+        fill="none" stroke="#0284c7" stroke-width="4" opacity="0.8" />
+
+  <!-- Large Stylized 'FI' Lettermark -->
+  <!-- 'F' -->
+  <path d="M 265,240 L 375,240 L 365,280 L 305,280 L 300,310 L 355,310 L 345,345 L 293,345 L 275,440 L 230,440 Z" fill="url(#fiGrad)" />
+  <path d="M 320,130 L 450,130 L 440,175 L 355,175 L 345,215 L 430,215 L 420,255 L 338,255 Z" fill="url(#fiGrad)" filter="url(#glow)" />
+  
+  <!-- 'I' -->
+  <path d="M 465,130 L 515,130 L 455,440 L 405,440 Z" fill="url(#fiGrad)" filter="url(#glow)" />
+
+  <!-- Semi-Truck Silhouette & Body -->
+  <!-- Main Cab & Roof Fairing -->
+  <path d="M 330,285 L 470,285 L 485,320 L 490,430 L 485,490 L 315,490 L 310,430 L 315,320 Z" fill="#071930" stroke="#38bdf8" stroke-width="4" />
+  
+  <!-- Windshield -->
+  <path d="M 338,300 L 462,300 L 455,335 L 345,335 Z" fill="#0284c7" opacity="0.85" />
+  
+  <!-- Sunvisor & Top Cab Lights -->
+  <rect x="350" y="290" width="100" height="6" fill="#38bdf8" rx="2" />
+  <circle cx="365" cy="293" r="3" fill="#fef08a" />
+  <circle cx="382" cy="293" r="3" fill="#fef08a" />
+  <circle cx="400" cy="293" r="3" fill="#fef08a" />
+  <circle cx="418" cy="293" r="3" fill="#fef08a" />
+  <circle cx="435" cy="293" r="3" fill="#fef08a" />
+
+  <!-- Large Front Grille -->
+  <rect x="340" y="350" width="120" height="85" rx="8" fill="#030712" stroke="#38bdf8" stroke-width="4" />
+  <line x1="345" y1="365" x2="455" y2="365" stroke="#1e293b" stroke-width="3" />
+  <line x1="345" y1="380" x2="455" y2="380" stroke="#1e293b" stroke-width="3" />
+  <line x1="345" y1="395" x2="455" y2="395" stroke="#1e293b" stroke-width="3" />
+  <line x1="345" y1="410" x2="455" y2="410" stroke="#1e293b" stroke-width="3" />
+  <line x1="345" y1="425" x2="455" y2="425" stroke="#1e293b" stroke-width="3" />
+
+  <!-- Chrome/LED Headlights -->
+  <polygon points="320,405 338,402 338,425 320,420" fill="#e0f2fe" filter="url(#glow)" />
+  <polygon points="480,405 462,402 462,425 480,420" fill="#e0f2fe" filter="url(#glow)" />
+  
+  <!-- Front Bumper & Tires -->
+  <rect x="310" y="435" width="180" height="28" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="3" />
+  <rect x="295" y="440" width="20" height="55" rx="4" fill="#020617" />
+  <rect x="485" y="440" width="20" height="55" rx="4" fill="#020617" />
+
+  <!-- Ground Shadow / Horizon Streaks -->
+  <ellipse cx="400" cy="500" rx="220" ry="18" fill="#0284c7" opacity="0.2" filter="url(#glow)" />
+
+  <!-- Typography: FLEET INTEGRA -->
+  <text x="400" y="575" text-anchor="middle" font-family="'Montserrat', 'Arial Black', sans-serif" font-size="42" font-weight="900" fill="#ffffff" letter-spacing="6">
+    FLEET INTEGRA
+  </text>
+  
+  <!-- Subtitle: Safety. Compliance. Risk Management. -->
+  <text x="400" y="615" text-anchor="middle" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="500" fill="#93c5fd" letter-spacing="3">
+    Safety. Compliance. Risk Management.
+  </text>
+</svg>

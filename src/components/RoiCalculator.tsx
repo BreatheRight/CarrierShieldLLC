@@ -40,10 +40,10 @@ export default function RoiCalculator({ onOpenDemo }: { onOpenDemo: () => void }
               <span>Tailored Liability Modelling</span>
             </div>
             <h3 className="font-display text-2xl font-bold text-white tracking-tight md:text-3xl">
-              Calculate Your Carrier Shield ROI
+              Calculate Your Fleet Integra ROI
             </h3>
             <p className="mt-2 text-slate-300 text-sm max-w-xl">
-              Our customers save an average of <span className="font-semibold text-white">18% on premiums</span> and eliminate FMCSA audit failure. Test your exact fleet characteristics below.
+              Estimate potential cost savings on administrative hours, driver turnover, and compliance risk prevention based on your fleet size.
             </p>
           </div>
 

@@ -67,18 +67,8 @@ export default function ChecklistQuiz({ onOpenDemo }: { onOpenDemo: () => void }
                 Evaluate Your DOT Audit Risk Exposure
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                FMCSA offsite audits have increased by <span className="text-[#38bdf8] font-bold">200%</span> since 2024. Take this quick 4-question checklist to estimate your compliance readiness score immediately.
+                FMCSA offsite audits and electronic logging inquiries are on the rise nationwide. Take this quick 4-question checklist to evaluate your compliance readiness.
               </p>
-
-              {/* Stats overlay */}
-              <div className="pt-4 mt-4 border-t border-blue-950/40">
-                <div className="flex gap-4 items-center">
-                  <div className="text-xl font-bold font-mono text-[#4ade80]">99.4%</div>
-                  <div className="text-xs text-slate-400">
-                    of Carrier Shield clients maintain a secure "Satisfactory" FMCSA rating.
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Right side interactive quiz module */}

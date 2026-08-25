@@ -40,7 +40,7 @@ interface Testimonial {
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    quote: "Switching our 45 drivers to Carrier Shield completely automated our qualification folders. Before this, we spent 10+ hours a week fighting paper renewals. We passed our offsite FMCSA compliance audit with zero errors.",
+    quote: "Switching our 45 drivers to Fleet Integra completely automated our qualification folders. Before this, we spent 10+ hours a week fighting paper renewals. We passed our offsite FMCSA compliance audit with zero errors.",
     author: "Timothy Vance",
     title: "Director of Fleet Safety",
     company: "Vance Logistics Group",
@@ -69,12 +69,12 @@ interface FaqItem {
 
 const FAQ_ITEMS: FaqItem[] = [
   {
-    q: "How does Carrier Shield secure driver qualification (DQ) folders?",
+    q: "How does Fleet Integra secure driver qualification (DQ) folders?",
     a: "We fully automate DQ file audits under Title 49 CFR Part 391. The platform automatically tracks driver medical examiner card expiry dates, coordinates DMV queries for Motor Vehicle Records (MVR), and warns administrators 60 days before any document expires or triggers safety flags."
   },
   {
     q: "Are we required to switch our existing physical ELD devices?",
-    a: "No equipment swaps required! Carrier Shield is a hardware-agnostic platform. We offer native API synchronization plugins and data adapters that pull active duty-status streams from almost all leading ELD setups, converting the raw telemetry into safety dashboards."
+    a: "No equipment swaps required! Fleet Integra is a hardware-agnostic platform. We offer native API synchronization plugins and data adapters that pull active duty-status streams from almost all leading ELD setups, converting the raw telemetry into safety dashboards."
   },
   {
     q: "How does the random drug selection pool consortium function?",
@@ -82,7 +82,7 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: "Is there any setup help or live support during sudden DOT audits?",
-    a: "Absolutely! Every active team on Carrier Shield is partnered with an expert DOT & FMCSA Compliance Specialist. In the event of an unexpected inspection or a structured audit notice, you have a direct hotline to pull compliance reports and walk through federal requirements."
+    a: "Absolutely! Every active team on Fleet Integra is partnered with an expert DOT & FMCSA Compliance Specialist. In the event of an unexpected inspection or a structured audit notice, you have a direct hotline to pull compliance reports and walk through federal requirements."
   }
 ];
 
@@ -102,7 +102,8 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
       {/* About Us */}
       <AboutUs />
 
-      {/* 3. Logos of Trust Badges */}
+      {/* 3. Logos of Trust Badges / Partner Affiliates (Commented out until vendor contracts are finalized) */}
+      {/* 
       <section className="bg-[#020712] py-8 border-y border-blue-950/30">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <p className="text-center font-mono text-[10px] text-slate-500 uppercase tracking-widest font-bold">
@@ -128,6 +129,7 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
           </div>
         </div>
       </section>
+      */}
 
       {/* 4. Complete Capabilities Section */}
       <FeaturesPreview />
@@ -165,7 +167,8 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
         </div>
       </section>
 
-      {/* 8. Satisfied Client Case Studies */}
+      {/* 8. Satisfied Client Case Studies / Testimonials (Commented out until customer reviews & case studies are established) */}
+      {/* 
       <section id="testimonials" className="bg-[#020712] py-24 md:py-32 border-y border-blue-950/40 relative">
         <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-sky-500/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
         
@@ -190,7 +193,6 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
             </button>
           </div>
 
-          {/* Testimonial grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, idx) => (
               <div 
@@ -198,7 +200,6 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
                 className="rounded-xl border border-blue-950/40 bg-[#071329]/60 p-6 flex flex-col justify-between hover:border-[#38bdf8]/20 transition-all duration-300 relative group"
               >
                 <div>
-                  {/* Star rating design */}
                   <div className="flex gap-1 mb-4 text-amber-400">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={14} fill="currentColor" />
@@ -232,6 +233,7 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
 
         </div>
       </section>
+      */}
 
       {/* 9. FAQs Accordion */}
       <section className="bg-[#030d1b] py-24 md:py-32">
@@ -318,7 +320,7 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
                 </button>
 
                 <a
-                  href="tel:+18005550199"
+                  href="tel:+12012937774"
                   className="rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white px-7 py-3 text-sm font-bold transition flex items-center justify-center gap-1.5"
                 >
                   <span>Call Active Advisor</span>

@@ -54,8 +54,8 @@ export default function ContactUs() {
                 <div>
                   <h4 className="text-sm font-bold text-white mb-1">Direct Phone</h4>
                   <p className="text-slate-400 text-sm">Call us directly. We are available 24/7 for urgent DOT matters.</p>
-                  <a href="tel:+17187185395" className="text-[#38bdf8] font-bold text-sm block mt-1 hover:underline">
-                    +1 (718) 718-5395
+                  <a href="tel:+12012937774" className="text-[#38bdf8] font-bold text-sm block mt-1 hover:underline">
+                    +1 (201) 293-7774
                   </a>
                 </div>
               </div>
@@ -66,9 +66,9 @@ export default function ContactUs() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white mb-1">Email Support</h4>
-                  <p className="text-slate-400 text-sm">Send us a message and our compliance team will respond within 24 hours.</p>
-                  <a href="mailto:support@nationalsolutions.com" className="text-[#38bdf8] font-bold text-sm block mt-1 hover:underline">
-                    support@nationalsolutions.com
+                  <p className="text-slate-400 text-sm">Send us a message and our compliance team will respond promptly.</p>
+                  <a href="mailto:support@fleetintegra.com" className="text-[#38bdf8] font-bold text-sm block mt-1 hover:underline">
+                    support@fleetintegra.com
                   </a>
                 </div>
               </div>
@@ -79,7 +79,7 @@ export default function ContactUs() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white mb-1">Corporate Headquarters</h4>
-                  <p className="text-slate-400 text-sm">100 Fleet St, Brooklyn, NY 11204<br/>United States</p>
+                  <p className="text-slate-400 text-sm">1101 Avenue U, Brooklyn, NY 11235<br/>United States</p>
                 </div>
               </div>
             </div>

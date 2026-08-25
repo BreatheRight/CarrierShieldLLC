@@ -1,6 +1,6 @@
 {
-  "name": "Carrier Shield Compliance LLC",
-  "description": "Next-generation fleet safety and DOT compliance platform. Smarter data, lower liability, and safer drivers.",
+  "name": "Fleet Integra LLC",
+  "description": "Outsourced Fleet Safety, DOT & FMCSA Compliance Infrastructure. Expert DQ file management, CSA risk monitoring, Drug & Alcohol consortium, permits, and New Carrier Launch support.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

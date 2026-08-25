@@ -37,11 +37,11 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
 
             {/* Description */}
             <p className="text-slate-300 text-base md:text-md leading-relaxed max-w-xl">
-              Carrier Shield Compliance LLC is your complete outsourced Safety & Compliance Department for trucking companies and expanding fleets. We handle all the complex and time-consuming aspects of FMCSA, DOT, CSA, Drug & Alcohol programs, and permitting — so you can drive growth without the stress of compliance risks. We also partner with trusted insurance providers to deliver full coverage for your fleet. Launching a new carrier? We provide full New Carrier Launch supports.
+              Fleet Integra is your complete outsourced Safety & Compliance Department for trucking companies and expanding fleets. We handle all the complex and time-consuming aspects of FMCSA, DOT, CSA, Drug & Alcohol programs, and permitting — so you can drive growth without the stress of compliance risks. We also partner with trusted insurance providers to deliver full coverage for your fleet. Launching a new carrier? We provide full New Carrier Launch supports.
             </p>
 
             {/* Interactive Lead-Capture Input */}
-            <form onSubmit={handleQuickSubmit} className="max-w-md">
+            <form onSubmit={handleQuickSubmit} className="max-w-md pt-2">
               <div className="flex flex-col sm:flex-row gap-2.5 rounded-xl bg-[#020712]/60 p-2 border border-blue-900/45 shadow-xl">
                 <input
                   type="email"
@@ -53,45 +53,16 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
                 />
                 <button
                   type="submit"
-                  className="w-full sm:w-auto rounded-lg bg-emerald-400 text-xs font-bold text-[#030d1b] px-5 py-2.5 hover:bg-emerald-300 active:scale-98 transition flex items-center justify-center gap-1.5 whitespace-nowrap"
+                  className="w-full sm:w-auto rounded-lg bg-sky-400 hover:bg-sky-300 text-xs font-bold text-[#030d1b] px-5 py-2.5 active:scale-98 transition flex items-center justify-center gap-1.5 whitespace-nowrap shadow-md shadow-sky-950/40 cursor-pointer"
                 >
-                  <span>Build Safety Profile</span>
+                  <span>Request Consultation</span>
                   <ArrowRight size={14} />
                 </button>
               </div>
-              <p className="text-[11px] text-slate-500 mt-2 ml-1">
-                Instant trial audit score included. No credit card required.
+              <p className="text-[11px] text-slate-400 mt-2 ml-1">
+                Speak directly with a dedicated DOT &amp; FMCSA safety specialist.
               </p>
             </form>
-
-            {/* Key Value Highlights */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pt-4 border-t border-blue-950/40">
-              <div>
-                <span className="font-display text-2xl font-bold text-white block">
-                  99.4%
-                </span>
-                <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 font-semibold block">
-                  Audit Pass Rate
-                </span>
-              </div>
-              <div>
-                <span className="font-display text-2xl font-bold text-white block">
-                  18%
-                </span>
-                <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 font-semibold block">
-                  Insurance Savings
-                </span>
-              </div>
-              <div className="col-span-2 md:col-span-1">
-                <span className="font-display text-2xl font-bold text-white block">
-                  48 Hr
-                </span>
-                <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 font-semibold block">
-                  Onboarding Speed
-                </span>
-              </div>
-            </div>
-
           </div>
 
           {/* Right Column: SLEEK Mockup dashboard representation */}
@@ -111,7 +82,7 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
                       <span className="h-2 w-2 rounded-full bg-green-400" />
                     </div>
                     <span className="font-mono text-[10px] text-slate-400 uppercase tracking-widest pl-2">
-                      Carrier Shield Core Dashboard
+                      Fleet Integra Core Dashboard
                     </span>
                   </div>
 
@@ -195,11 +166,16 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
 
                 </div>
 
-                {/* Simulated Image accent inside dashboard mockup (uses beautiful logistics truck image from Unsplash) */}
+                {/* Simulated Image accent inside dashboard mockup (American conventional commercial semi-truck) */}
                 <div className="mt-3 relative h-40 rounded-xl overflow-hidden border border-blue-950/50 group">
                   <img
-                    src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=1200"
-                    alt="Carrier Shield safety monitor"
+                    src="/SiteImageAssets/us-fleet-truck.jpg"
+                    alt="US Interstate Fleet Semi-Truck"
+                    onError={(e) => {
+                      // Fallback to high-res American conventional truck if needed
+                      (e.currentTarget as HTMLImageElement).src =
+                        "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=1200";
+                    }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 brightness-90 relative z-0"
                     referrerPolicy="no-referrer"
                   />

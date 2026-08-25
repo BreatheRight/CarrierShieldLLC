@@ -69,7 +69,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                     <span>Instant Consultation & Demo</span>
                   </div>
                   <h3 className="font-display text-2xl font-bold text-white md:text-3xl">
-                    Experience Carrier Shield
+                    Experience Fleet Integra
                   </h3>
                   <p className="mt-2 text-sm text-slate-300">
                     See how our compliance suite protects your drivers, lowers your insurance costs, and satisfies all audit guidelines.
@@ -229,7 +229,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   Demo Package Reserved!
                 </h3>
                 <p className="mt-3 text-sm text-slate-300">
-                  Welcome to <span className="font-semibold text-emerald-400">Carrier Shield Compliance LLC</span>, {formData.name}.
+                  Welcome to <span className="font-semibold text-emerald-400">Fleet Integra LLC</span>, {formData.name}.
                 </p>
                 <p className="mt-2 text-xs text-slate-400 max-w-sm mx-auto">
                   A DOT & Fleet Advisor will contact you at <span className="text-slate-300 font-mono">{formData.phone}</span> or <span className="text-slate-300 font-mono">{formData.email}</span> within 15 minutes to confirm your custom system walkthrough.

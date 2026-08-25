@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, ChevronDown, ShieldAlert, FileText, UserCheck, BarChart3, Truck, ArrowRight, HelpCircle, ShieldCheck } from "lucide-react";
+import { Menu, X, ChevronDown, ShieldAlert, FileText, UserCheck, BarChart3, Truck, ArrowRight, HelpCircle } from "lucide-react";
+import FleetIntegraLogo from "./FleetIntegraLogo";
 
 interface MainNavbarProps {
   onOpenDemo: () => void;
@@ -121,18 +122,8 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-[#38bdf8] rounded flex items-center justify-center text-[#030d1b] shadow-[0_0_15px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_20px_rgba(56,189,248,0.5)] transition-all">
-            <ShieldCheck size={28} />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display text-xl font-semibold tracking-tight text-white leading-none mt-1">
-              Valora
-            </span>
-            <span className="text-[9px] font-mono tracking-widest text-slate-400 uppercase leading-none font-semibold mt-1.5">
-              Fleet & Compliance Suite
-            </span>
-          </div>
+        <Link to="/" className="flex items-center group">
+          <FleetIntegraLogo size="md" />
         </Link>
 
         {/* Desktop Nav Items */}
@@ -217,10 +208,10 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
           <div className="hidden sm:flex flex-col items-center">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Call us Now</span>
             <a
-              href="tel:+17189188373"
+              href="tel:+12012937774"
               className="rounded-full bg-emerald-400 px-5 py-2 text-sm font-bold text-[#030d1b] hover:bg-emerald-300 hover:shadow-lg hover:shadow-emerald-500/20 active:scale-98 transition duration-150"
             >
-              +1 (718) 918-8373
+              +1 (201) 293-7774
             </a>
           </div>
 
@@ -260,10 +251,10 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
               <div className="h-px bg-blue-900/20" />
 
               <a
-                href="tel:+17189188373"
+                href="tel:+12012937774"
                 className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-emerald-400 px-4 py-3 text-sm font-bold text-[#030d1b] hover:bg-emerald-300 transition duration-150"
               >
-                <span>Call Us Now: +1 (718) 918-8373</span>
+                <span>Call Us Now: +1 (201) 293-7774</span>
               </a>
             </div>
           </motion.div>

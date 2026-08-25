@@ -14,7 +14,7 @@ export default function FeaturesPreview() {
           </div>
           
           <h2 className="font-display text-3xl md:text-5xl font-extrabold tracking-tight text-white">
-            What You Can Do With Valora
+            What You Can Do With Fleet Integra
           </h2>
           
           <p className="text-slate-300 text-sm md:text-base leading-relaxed">

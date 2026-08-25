@@ -300,7 +300,7 @@ export default function FleetTelemetrySim() {
                 <span>100% Automatic Logging</span>
               </h5>
               <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">
-                Carrier Shield automates the ELD syncing, logs safety check-ins and detects audit gaps. Reduce risk of audit failure by <span className="text-[#4ade80] font-bold">99.4%</span>.
+                Fleet Integra helps streamline ELD syncing, logs safety check-ins, and detects potential compliance gaps before audits happen.
               </p>
             </div>
           </div>

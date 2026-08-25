@@ -34,7 +34,7 @@ Message:
 ${formData.message}
     `);
     
-    window.location.href = `mailto:thatonestatue@proton.me?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:sales@fleetintegra.com?subject=${subject}&body=${body}`;
     setIsSubmitted(true);
   };
 
@@ -64,8 +64,8 @@ ${formData.message}
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Call Us</h4>
-                    <a href="tel:718-918-8373" className="text-lg font-bold text-white hover:text-sky-400 transition">
-                      718-918-8373
+                    <a href="tel:+12012937774" className="text-lg font-bold text-white hover:text-sky-400 transition">
+                      +1 (201) 293-7774
                     </a>
                   </div>
                 </div>
@@ -76,8 +76,8 @@ ${formData.message}
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Email Support</h4>
-                    <a href="mailto:support@valora.com" className="text-lg font-bold text-white hover:text-emerald-400 transition">
-                      support@valora.com
+                    <a href="mailto:support@fleetintegra.com" className="text-lg font-bold text-white hover:text-emerald-400 transition">
+                      support@fleetintegra.com
                     </a>
                   </div>
                 </div>
@@ -89,7 +89,7 @@ ${formData.message}
                   <div>
                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Headquarters</h4>
                     <p className="text-lg font-bold text-white">
-                      424 Oceanic Pkwy<br />Brooklyn, NY 11225
+                      1101 Avenue U<br />Brooklyn, NY 11235
                     </p>
                   </div>
                 </div>
@@ -106,7 +106,7 @@ ${formData.message}
                     <CheckCircle size={48} />
                   </div>
                   <h3 className="font-display text-2xl font-bold text-white">Message Initiated</h3>
-                  <p className="text-slate-300">Your email client should open shortly. If not, please reach out to us at thatonestatue@proton.me.</p>
+                  <p className="text-slate-300">Your email client should open shortly. If not, please reach out to us at sales@fleetintegra.com or support@fleetintegra.com.</p>
                   <button 
                     onClick={() => setIsSubmitted(false)}
                     className="mt-6 text-sky-400 text-sm font-semibold hover:underline"

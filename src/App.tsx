@@ -15,6 +15,9 @@ import ResourcesPage from "./pages/ResourcesPage";
 import ContactPage from "./pages/ContactPage";
 import ServicesPage from "./pages/ServicesPage";
 import PricingPage from "./pages/PricingPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import CookieConsentBanner from "./components/CookieConsentBanner";
 
 export default function App() {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
@@ -36,11 +39,16 @@ export default function App() {
             <Route path="/remote-safety-compliance" element={<RemoteSafetyCompliancePage onOpenDemo={openDemo} />} />
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+            <Route path="/terms" element={<TermsOfServicePage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/privacy" element={<PrivacyPolicyPage />} />
           </Routes>
         </div>
 
         <Footer onOpenDemo={openDemo} />
         <DemoModal isOpen={isDemoOpen} onClose={closeDemo} />
+        <CookieConsentBanner />
       </div>
     </Router>
   );
