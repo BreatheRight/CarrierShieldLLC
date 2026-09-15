@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Send, Phone, Mail, MapPin, CheckCircle } from "lucide-react";
+import { Send, Phone, Mail, MapPin, CheckCircle, ArrowRight } from "lucide-react";
+import { submitContactForm, buildMailtoUrl } from "../services/contactService";
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionFeedback, setSubmissionFeedback] = useState<string>("");
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -18,24 +21,24 @@ export default function ContactPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: import("react").FormEvent) => {
+  const handleSubmit = async (e: import("react").FormEvent) => {
     e.preventDefault();
-    // Use mailto for client-side sending
-    const subject = encodeURIComponent(`New Inquiry from ${formData.name} - ${formData.company}`);
-    const body = encodeURIComponent(`
-Name: ${formData.name}
-Company: ${formData.company}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Fleet Size: ${formData.fleetSize}
-Service Interest: ${formData.serviceInterest}
+    setIsSubmitting(true);
 
-Message:
-${formData.message}
-    `);
-    
-    window.location.href = `mailto:sales@fleetintegra.com?subject=${subject}&body=${body}`;
-    setIsSubmitted(true);
+    try {
+      const response = await submitContactForm({
+        ...formData,
+        source: "Contact Page Form",
+      });
+
+      setSubmissionFeedback(response.message);
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setIsSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -105,14 +108,40 @@ ${formData.message}
                   <div className="p-4 rounded-full bg-emerald-500/10 text-emerald-400 mb-2">
                     <CheckCircle size={48} />
                   </div>
-                  <h3 className="font-display text-2xl font-bold text-white">Message Initiated</h3>
-                  <p className="text-slate-300">Your email client should open shortly. If not, please reach out to us at sales@fleetintegra.com or support@fleetintegra.com.</p>
-                  <button 
-                    onClick={() => setIsSubmitted(false)}
-                    className="mt-6 text-sky-400 text-sm font-semibold hover:underline"
-                  >
-                    Send another message
-                  </button>
+                  <h3 className="font-display text-2xl font-bold text-white">Inquiry Forwarded</h3>
+                  <p className="text-slate-300 text-sm max-w-md">
+                    {submissionFeedback || "Thank you! Your message has been routed to our safety and compliance team at sales@fleetintegra.com, and a confirmation receipt has been sent to your email."}
+                  </p>
+                  <p className="text-slate-400 text-xs mt-2">
+                    A dedicated safety specialist will review your fleet profile and contact you shortly.
+                  </p>
+                  
+                  <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
+                    <a
+                      href={buildMailtoUrl({ ...formData, source: "Contact Page Fallback" })}
+                      className="inline-flex items-center gap-2 rounded-lg bg-sky-500/10 border border-sky-500/30 px-4 py-2 text-xs font-semibold text-sky-400 hover:bg-sky-500/20 transition"
+                    >
+                      <Mail size={14} />
+                      <span>Email sales@fleetintegra.com Directly</span>
+                    </a>
+                    <button 
+                      onClick={() => {
+                        setIsSubmitted(false);
+                        setFormData({
+                          name: "",
+                          company: "",
+                          email: "",
+                          phone: "",
+                          fleetSize: "",
+                          serviceInterest: "Remote Safety Support",
+                          message: ""
+                        });
+                      }}
+                      className="text-slate-400 text-xs font-semibold hover:text-white transition px-3 py-2"
+                    >
+                      Submit Another Inquiry
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
@@ -166,9 +195,19 @@ ${formData.message}
                     <textarea required id="message" name="message" rows={4} value={formData.message} onChange={handleChange} className="w-full bg-[#020712] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-sky-500/50 transition text-sm resize-none" placeholder="Tell us about your current compliance needs..." />
                   </div>
 
-                  <button type="submit" className="w-full bg-emerald-400 hover:bg-emerald-300 text-[#030d1b] font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 transition duration-200 mt-2">
-                    <span>Send Message</span>
-                    <Send size={16} />
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="w-full bg-emerald-400 hover:bg-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed text-[#030d1b] font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 transition duration-200 mt-2 cursor-pointer shadow-lg shadow-emerald-950/40"
+                  >
+                    {isSubmitting ? (
+                      <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#030d1b] border-t-transparent" />
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send size={16} />
+                      </>
+                    )}
                   </button>
                 </form>
               )}

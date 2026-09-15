@@ -1,11 +1,61 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig} from 'vite';
+import {defineConfig, Plugin} from 'vite';
+
+function localDevApiPlugin(): Plugin {
+  return {
+    name: 'local-dev-api-contact',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        if (req.url?.startsWith('/api/contact') && req.method === 'POST') {
+          let bodyStr = '';
+          req.on('data', (chunk) => {
+            bodyStr += chunk;
+          });
+          req.on('end', async () => {
+            try {
+              const body = JSON.parse(bodyStr || '{}');
+              const fakeReq = {
+                method: 'POST',
+                body,
+                headers: req.headers,
+              };
+              const fakeRes = {
+                setHeader: (name: string, val: string) => {
+                  res.setHeader(name, val);
+                },
+                status: (statusCode: number) => ({
+                  json: (jsonBody: any) => {
+                    res.statusCode = statusCode;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(jsonBody));
+                  },
+                  end: () => res.end(),
+                }),
+              };
+
+              const module = await server.ssrLoadModule('./api/contact.ts');
+              const handler = module.default;
+              await handler(fakeReq, fakeRes);
+            } catch (err: any) {
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: false, error: err?.message }));
+            }
+          });
+          return;
+        }
+        next();
+      });
+    },
+  };
+}
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
+    plugins: [react(), tailwindcss(), localDevApiPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

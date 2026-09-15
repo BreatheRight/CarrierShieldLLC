@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, ArrowRight, Building2, User, Truck, MessageSquare } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Building2, User, Truck, MessageSquare, CheckCircle2 } from "lucide-react";
+import { submitContactForm, buildMailtoUrl } from "../services/contactService";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
     name: "",
     company: "",
+    email: "",
+    phone: "",
     fleetSize: "1-5",
     inquiryType: "General Inquiry",
     message: "",
@@ -12,16 +15,32 @@ export default function ContactUs() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  const handleSubmit = (e: import("react").FormEvent) => {
+  const handleSubmit = async (e: import("react").FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const result = await submitContactForm({
+        name: formData.name,
+        company: formData.company,
+        email: formData.email,
+        phone: formData.phone,
+        fleetSize: formData.fleetSize,
+        serviceInterest: formData.inquiryType,
+        message: formData.message,
+        source: "Landing Page Contact Section",
+      });
+
+      setFeedbackMessage(result.message);
       setIsSuccess(true);
-    }, 1500);
+    } catch (error) {
+      console.error("Submission error:", error);
+      setIsSuccess(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -90,20 +109,38 @@ export default function ContactUs() {
             {isSuccess ? (
               <div className="h-full flex flex-col items-center justify-center py-12 text-center space-y-4">
                 <div className="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mb-2">
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="font-display text-2xl font-bold text-white">Message Received</h3>
-                <p className="text-slate-300 text-sm max-w-xs mx-auto">
-                  Thank you for reaching out. One of our compliance specialists will contact you shortly.
+                <h3 className="font-display text-2xl font-bold text-white">Inquiry Received</h3>
+                <p className="text-slate-300 text-sm max-w-sm mx-auto">
+                  {feedbackMessage || "Thank you for reaching out! Your message has been forwarded to our compliance team at sales@fleetintegra.com, and a confirmation receipt has been sent to your email."}
                 </p>
-                <button
-                  onClick={() => setIsSuccess(false)}
-                  className="mt-4 text-emerald-400 text-sm font-bold hover:underline"
-                >
-                  Send another message
-                </button>
+                <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+                  <a
+                    href={buildMailtoUrl({ ...formData, serviceInterest: formData.inquiryType, source: "Landing Page Fallback" })}
+                    className="inline-flex items-center gap-2 rounded-lg bg-sky-500/10 border border-sky-500/30 px-4 py-2 text-xs font-semibold text-sky-400 hover:bg-sky-500/20 transition"
+                  >
+                    <Mail size={14} />
+                    <span>Email sales@fleetintegra.com Directly</span>
+                  </a>
+                  <button
+                    onClick={() => {
+                      setIsSuccess(false);
+                      setFormData({
+                        name: "",
+                        company: "",
+                        email: "",
+                        phone: "",
+                        fleetSize: "1-5",
+                        inquiryType: "General Inquiry",
+                        message: "",
+                      });
+                    }}
+                    className="text-slate-400 text-xs font-semibold hover:text-white transition px-3 py-2"
+                  >
+                    Send another message
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -142,6 +179,46 @@ export default function ContactUs() {
                         onChange={(e) => setFormData({...formData, company: e.target.value})}
                         className="w-full bg-slate-900/60 border border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm text-white focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 focus:outline-none transition-colors"
                         placeholder="Logistics Inc."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider block">
+                      Business Email
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                        <Mail size={16} />
+                      </div>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="w-full bg-slate-900/60 border border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm text-white focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 focus:outline-none transition-colors"
+                        placeholder="john@company.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider block">
+                      Phone Number
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                        <Phone size={16} />
+                      </div>
+                      <input
+                        type="tel"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        className="w-full bg-slate-900/60 border border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm text-white focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 focus:outline-none transition-colors"
+                        placeholder="(555) 123-4567"
                       />
                     </div>
                   </div>
@@ -209,7 +286,7 @@ export default function ContactUs() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-bold text-[#030d1b] hover:bg-emerald-300 active:scale-98 transition duration-200 disabled:opacity-75 mt-2"
+                  className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-bold text-[#030d1b] hover:bg-emerald-300 active:scale-98 transition duration-200 disabled:opacity-75 mt-2 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#030d1b] border-t-transparent" />

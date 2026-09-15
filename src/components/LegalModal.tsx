@@ -75,8 +75,8 @@ export default function LegalModal({ docType, onClose }: LegalModalProps) {
           <h4 className="text-sm font-bold text-white pt-2">4. Company Information & Legal Venue</h4>
           <p>
             Fleet Integra LLC is legally registered in the State of New York, operating at 1101 Avenue U, Brooklyn, NY 11235. Inquiries may be directed to{" "}
-            <a href="mailto:sales@fleetintegra.com" className="text-sky-400 hover:underline">
-              sales@fleetintegra.com
+            <a href="mailto:support@fleetintegra.com" className="text-sky-400 hover:underline">
+              support@fleetintegra.com
             </a>{" "}
             or{" "}
             <a href="tel:+12012937774" className="text-emerald-400 hover:underline">

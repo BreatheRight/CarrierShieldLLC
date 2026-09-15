@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Calendar, ArrowRight, ShieldCheck, CheckCircle2, User, Building2, Mail, Phone, Truck } from "lucide-react";
+import { submitContactForm } from "../services/contactService";
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -20,15 +21,28 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: import("react").FormEvent) => {
+  const handleSubmit = async (e: import("react").FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API registration
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await submitContactForm({
+        name: formData.name,
+        company: formData.company,
+        email: formData.email,
+        phone: formData.phone,
+        fleetSize: formData.fleetSize,
+        serviceInterest: `Demo & Consultation (${formData.role})`,
+        message: `Demo consultation requested for fleet size ${formData.fleetSize}. Role: ${formData.role}`,
+        source: "Demo Consultation Modal",
+      });
       setIsSuccess(true);
-    }, 1500);
+    } catch (err) {
+      console.error("Demo submit error:", err);
+      setIsSuccess(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

@@ -77,8 +77,8 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
                 <div className="flex items-center gap-2">
                   <Mail size={13} className="text-sky-400 flex-shrink-0" />
                   <span className="text-slate-300">
-                    <a href="mailto:sales@fleetintegra.com" className="hover:text-white transition-colors">
-                      sales@fleetintegra.com
+                    <a href="mailto:support@fleetintegra.com" className="hover:text-white transition-colors">
+                      support@fleetintegra.com
                     </a>
                   </span>
                 </div>
