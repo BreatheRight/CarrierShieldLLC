@@ -1,6 +1,7 @@
-import { ArrowRight, ShieldCheck, Play, Users, Calendar, Sparkles, Building2 } from "lucide-react";
+import { ArrowRight, ShieldCheck, Play, Users, Calendar, Sparkles, Building2, Check, AlertCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
+import { validateEmail } from "../utils/validation";
 
 interface HeroSectionProps {
   onOpenDemo: () => void;
@@ -8,9 +9,15 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
   const [quickEmail, setQuickEmail] = useState("");
+  const [touched, setTouched] = useState(false);
+  const [allowPersonalEmail, setAllowPersonalEmail] = useState(false);
+
+  const emailValidation = validateEmail(quickEmail, allowPersonalEmail);
 
   const handleQuickSubmit = (e: import("react").FormEvent) => {
     e.preventDefault();
+    setTouched(true);
+    if (!emailValidation.isValid) return;
     onOpenDemo();
   };
 
@@ -42,26 +49,77 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
 
             {/* Interactive Lead-Capture Input */}
             <form onSubmit={handleQuickSubmit} className="max-w-md pt-2">
-              <div className="flex flex-col sm:flex-row gap-2.5 rounded-xl bg-[#020712]/60 p-2 border border-blue-900/45 shadow-xl">
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter business email"
-                  value={quickEmail}
-                  onChange={(e) => setQuickEmail(e.target.value)}
-                  className="flex-grow bg-transparent px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none w-full"
-                />
+              <div className={`flex flex-col sm:flex-row gap-2.5 rounded-xl bg-[#020712]/60 p-2 border transition shadow-xl ${
+                touched && emailValidation.error
+                  ? "border-rose-500/80"
+                  : quickEmail && emailValidation.isValid
+                  ? "border-emerald-500/70"
+                  : "border-blue-900/45"
+              }`}>
+                <div className="relative flex-grow flex items-center">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Enter business email"
+                    value={quickEmail}
+                    onBlur={() => setTouched(true)}
+                    onChange={(e) => {
+                      setQuickEmail(e.target.value);
+                      if (!touched && e.target.value.length > 3) {
+                        setTouched(true);
+                      }
+                    }}
+                    className="bg-transparent px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none w-full"
+                  />
+                  {quickEmail && (
+                    <div className="pr-2">
+                      {touched && emailValidation.error ? (
+                        <AlertCircle size={15} className="text-rose-400" />
+                      ) : emailValidation.isValid ? (
+                        <Check size={15} className="text-emerald-400" />
+                      ) : null}
+                    </div>
+                  )}
+                </div>
                 <button
                   type="submit"
-                  className="w-full sm:w-auto rounded-lg bg-sky-400 hover:bg-sky-300 text-xs font-bold text-[#030d1b] px-5 py-2.5 active:scale-98 transition flex items-center justify-center gap-1.5 whitespace-nowrap shadow-md shadow-sky-950/40 cursor-pointer"
+                  disabled={touched && !emailValidation.isValid}
+                  className="w-full sm:w-auto rounded-lg bg-sky-400 hover:bg-sky-300 text-xs font-bold text-[#030d1b] px-5 py-2.5 active:scale-98 transition flex items-center justify-center gap-1.5 whitespace-nowrap shadow-md shadow-sky-950/40 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span>Request Consultation</span>
                   <ArrowRight size={14} />
                 </button>
               </div>
-              <p className="text-[11px] text-slate-400 mt-2 ml-1">
-                Speak directly with a dedicated DOT &amp; FMCSA safety specialist.
-              </p>
+
+              {touched && emailValidation.error && (
+                <div className="space-y-1 mt-2 ml-1">
+                  <p className="text-[11px] text-rose-400 flex items-start gap-1 leading-tight">
+                    <span>•</span>
+                    <span>{emailValidation.error}</span>
+                  </p>
+                  {!allowPersonalEmail && emailValidation.error.includes("Free domains") && (
+                    <button
+                      type="button"
+                      onClick={() => setAllowPersonalEmail(true)}
+                      className="text-[11px] text-sky-400 hover:text-sky-300 underline font-medium cursor-pointer block"
+                    >
+                      Independent owner-operator? Click to use personal email
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {emailValidation.warning && (
+                <p className="text-[11px] text-amber-400/90 leading-tight mt-1.5 ml-1">
+                  {emailValidation.warning}
+                </p>
+              )}
+
+              {(!touched || emailValidation.isValid) && (
+                <p className="text-[11px] text-slate-400 mt-2 ml-1">
+                  Speak directly with a dedicated DOT &amp; FMCSA safety specialist.
+                </p>
+              )}
             </form>
           </div>
 

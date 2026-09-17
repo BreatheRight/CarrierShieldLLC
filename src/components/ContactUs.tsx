@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { Mail, Phone, MapPin, ArrowRight, Building2, User, Truck, MessageSquare, CheckCircle2 } from "lucide-react";
+import React, { useState, type ChangeEvent, type FormEvent } from "react";
+import { Mail, Phone, MapPin, ArrowRight, Building2, User, Truck, MessageSquare, CheckCircle2, AlertCircle, Check } from "lucide-react";
 import { submitContactForm, buildMailtoUrl } from "../services/contactService";
+import { formatPhoneNumber, validatePhoneNumber, validateEmail } from "../utils/validation";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -13,12 +14,35 @@ export default function ContactUs() {
     message: "",
   });
   
+  const [allowPersonalEmail, setAllowPersonalEmail] = useState(false);
+  const [touched, setTouched] = useState({ email: false, phone: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
+  const emailValidation = validateEmail(formData.email, allowPersonalEmail);
+  const phoneValidation = validatePhoneNumber(formData.phone);
+
+  const isFormValid =
+    formData.name.trim().length > 0 &&
+    formData.company.trim().length > 0 &&
+    emailValidation.isValid &&
+    phoneValidation.isValid &&
+    formData.message.trim().length > 0;
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setFormData({ ...formData, phone: formatted });
+  };
+
   const handleSubmit = async (e: import("react").FormEvent) => {
     e.preventDefault();
+    setTouched({ email: true, phone: true });
+
+    if (!emailValidation.isValid || !phoneValidation.isValid) {
+      return;
+    }
+
     setIsSubmitting(true);
     
     try {
@@ -185,10 +209,18 @@ export default function ContactUs() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Business Email */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider block">
-                      Business Email
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider block">
+                        Business Email
+                      </label>
+                      {formData.email && emailValidation.isValid && emailValidation.isProfessional && (
+                        <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1">
+                          <Check size={12} /> Company Domain
+                        </span>
+                      )}
+                    </div>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
                         <Mail size={16} />
@@ -197,17 +229,68 @@ export default function ContactUs() {
                         type="email"
                         required
                         value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full bg-slate-900/60 border border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm text-white focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 focus:outline-none transition-colors"
+                        onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
+                        onChange={(e) => {
+                          setFormData({ ...formData, email: e.target.value });
+                          if (!touched.email && e.target.value.length > 3) {
+                            setTouched((prev) => ({ ...prev, email: true }));
+                          }
+                        }}
+                        className={`w-full bg-slate-900/60 rounded-lg py-2.5 pl-10 pr-10 text-sm text-white focus:outline-none transition-colors ${
+                          touched.email && emailValidation.error
+                            ? "border border-rose-500/80 focus:border-rose-400 focus:ring-1 focus:ring-rose-400/40"
+                            : formData.email && emailValidation.isValid
+                            ? "border border-emerald-500/70 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40"
+                            : "border border-slate-700 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400"
+                        }`}
                         placeholder="john@company.com"
                       />
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        {touched.email && emailValidation.error ? (
+                          <AlertCircle size={16} className="text-rose-400" />
+                        ) : formData.email && emailValidation.isValid ? (
+                          <CheckCircle2 size={16} className="text-emerald-400" />
+                        ) : null}
+                      </div>
                     </div>
+
+                    {/* Email validation feedback */}
+                    {touched.email && emailValidation.error && (
+                      <div className="space-y-1 mt-1">
+                        <p className="text-[11px] text-rose-400 flex items-start gap-1 leading-tight">
+                          <span>•</span>
+                          <span>{emailValidation.error}</span>
+                        </p>
+                        {!allowPersonalEmail && emailValidation.error.includes("Free domains") && (
+                          <button
+                            type="button"
+                            onClick={() => setAllowPersonalEmail(true)}
+                            className="text-[11px] text-sky-400 hover:text-sky-300 underline font-medium cursor-pointer"
+                          >
+                            Independent owner-operator? Click here to use personal email
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    {emailValidation.warning && (
+                      <p className="text-[11px] text-amber-400/90 leading-tight">
+                        {emailValidation.warning}
+                      </p>
+                    )}
                   </div>
 
+                  {/* Phone Number */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider block">
-                      Phone Number
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider block">
+                        Phone Number
+                      </label>
+                      {formData.phone && phoneValidation.isValid && (
+                        <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1">
+                          <Check size={12} /> Valid 10-Digit
+                        </span>
+                      )}
+                    </div>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
                         <Phone size={16} />
@@ -216,11 +299,38 @@ export default function ContactUs() {
                         type="tel"
                         required
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                        className="w-full bg-slate-900/60 border border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm text-white focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 focus:outline-none transition-colors"
+                        onBlur={() => setTouched((prev) => ({ ...prev, phone: true }))}
+                        onChange={(e) => {
+                          handlePhoneChange(e);
+                          if (!touched.phone && e.target.value.length > 2) {
+                            setTouched((prev) => ({ ...prev, phone: true }));
+                          }
+                        }}
+                        className={`w-full bg-slate-900/60 rounded-lg py-2.5 pl-10 pr-10 text-sm text-white focus:outline-none transition-colors ${
+                          touched.phone && phoneValidation.error
+                            ? "border border-rose-500/80 focus:border-rose-400 focus:ring-1 focus:ring-rose-400/40"
+                            : formData.phone && phoneValidation.isValid
+                            ? "border border-emerald-500/70 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40"
+                            : "border border-slate-700 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400"
+                        }`}
                         placeholder="(555) 123-4567"
                       />
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        {touched.phone && phoneValidation.error ? (
+                          <AlertCircle size={16} className="text-rose-400" />
+                        ) : formData.phone && phoneValidation.isValid ? (
+                          <CheckCircle2 size={16} className="text-emerald-400" />
+                        ) : null}
+                      </div>
                     </div>
+
+                    {/* Phone validation feedback */}
+                    {touched.phone && phoneValidation.error && (
+                      <p className="text-[11px] text-rose-400 flex items-start gap-1 leading-tight mt-1">
+                        <span>•</span>
+                        <span>{phoneValidation.error}</span>
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -285,8 +395,8 @@ export default function ContactUs() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-bold text-[#030d1b] hover:bg-emerald-300 active:scale-98 transition duration-200 disabled:opacity-75 mt-2 cursor-pointer"
+                  disabled={isSubmitting || (touched.email && !emailValidation.isValid) || (touched.phone && !phoneValidation.isValid)}
+                  className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-400 px-5 py-3 text-sm font-bold text-[#030d1b] hover:bg-emerald-300 active:scale-98 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-2 cursor-pointer shadow-lg shadow-emerald-950/30"
                 >
                   {isSubmitting ? (
                     <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#030d1b] border-t-transparent" />

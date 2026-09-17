@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Send, Phone, Mail, MapPin, CheckCircle, ArrowRight } from "lucide-react";
+import { Send, Phone, Mail, MapPin, CheckCircle, ArrowRight, AlertCircle, Check } from "lucide-react";
 import { submitContactForm, buildMailtoUrl } from "../services/contactService";
+import { formatPhoneNumber, validatePhoneNumber, validateEmail } from "../utils/validation";
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionFeedback, setSubmissionFeedback] = useState<string>("");
+  const [allowPersonalEmail, setAllowPersonalEmail] = useState(false);
+  const [touched, setTouched] = useState({ email: false, phone: false });
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -16,13 +19,35 @@ export default function ContactPage() {
     message: ""
   });
 
+  const emailValidation = validateEmail(formData.email, allowPersonalEmail);
+  const phoneValidation = validatePhoneNumber(formData.phone);
+
   const handleChange = (e: import("react").ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === "phone") {
+      const formatted = formatPhoneNumber(value);
+      setFormData(prev => ({ ...prev, phone: formatted }));
+      if (!touched.phone && value.length > 2) {
+        setTouched(prev => ({ ...prev, phone: true }));
+      }
+    } else if (name === "email") {
+      setFormData(prev => ({ ...prev, email: value }));
+      if (!touched.email && value.length > 3) {
+        setTouched(prev => ({ ...prev, email: true }));
+      }
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e: import("react").FormEvent) => {
     e.preventDefault();
+    setTouched({ email: true, phone: true });
+
+    if (!emailValidation.isValid || !phoneValidation.isValid) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -157,13 +182,110 @@ export default function ContactPage() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {/* Business Email */}
                     <div className="space-y-1.5">
-                      <label htmlFor="email" className="text-xs font-semibold text-slate-300 ml-1">Business Email</label>
-                      <input required type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-[#020712] border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-sky-500/50 transition text-sm" placeholder="john@acme.com" />
+                      <div className="flex items-center justify-between ml-1">
+                        <label htmlFor="email" className="text-xs font-semibold text-slate-300">Business Email</label>
+                        {formData.email && emailValidation.isValid && emailValidation.isProfessional && (
+                          <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1">
+                            <Check size={12} /> Company Domain
+                          </span>
+                        )}
+                      </div>
+                      <div className="relative">
+                        <input
+                          required
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onBlur={() => setTouched(prev => ({ ...prev, email: true }))}
+                          onChange={handleChange}
+                          className={`w-full bg-[#020712] rounded-lg px-4 py-2.5 pr-10 text-white focus:outline-none transition text-sm ${
+                            touched.email && emailValidation.error
+                              ? "border border-rose-500/80 focus:border-rose-400 focus:ring-1 focus:ring-rose-400/40"
+                              : formData.email && emailValidation.isValid
+                              ? "border border-emerald-500/70 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40"
+                              : "border border-slate-800 focus:border-sky-500/50"
+                          }`}
+                          placeholder="john@acme.com"
+                        />
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                          {touched.email && emailValidation.error ? (
+                            <AlertCircle size={16} className="text-rose-400" />
+                          ) : formData.email && emailValidation.isValid ? (
+                            <CheckCircle size={16} className="text-emerald-400" />
+                          ) : null}
+                        </div>
+                      </div>
+
+                      {touched.email && emailValidation.error && (
+                        <div className="space-y-1 ml-1">
+                          <p className="text-[11px] text-rose-400 flex items-start gap-1 leading-tight">
+                            <span>•</span>
+                            <span>{emailValidation.error}</span>
+                          </p>
+                          {!allowPersonalEmail && emailValidation.error.includes("Free domains") && (
+                            <button
+                              type="button"
+                              onClick={() => setAllowPersonalEmail(true)}
+                              className="text-[11px] text-sky-400 hover:text-sky-300 underline font-medium cursor-pointer block"
+                            >
+                              Independent owner-operator? Click here to use personal email
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      {emailValidation.warning && (
+                        <p className="text-[11px] text-amber-400/90 leading-tight ml-1">
+                          {emailValidation.warning}
+                        </p>
+                      )}
                     </div>
+
+                    {/* Phone Number */}
                     <div className="space-y-1.5">
-                      <label htmlFor="phone" className="text-xs font-semibold text-slate-300 ml-1">Phone Number</label>
-                      <input required type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-[#020712] border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-sky-500/50 transition text-sm" placeholder="(555) 123-4567" />
+                      <div className="flex items-center justify-between ml-1">
+                        <label htmlFor="phone" className="text-xs font-semibold text-slate-300">Phone Number</label>
+                        {formData.phone && phoneValidation.isValid && (
+                          <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1">
+                            <Check size={12} /> Valid 10-Digit
+                          </span>
+                        )}
+                      </div>
+                      <div className="relative">
+                        <input
+                          required
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
+                          onChange={handleChange}
+                          className={`w-full bg-[#020712] rounded-lg px-4 py-2.5 pr-10 text-white focus:outline-none transition text-sm ${
+                            touched.phone && phoneValidation.error
+                              ? "border border-rose-500/80 focus:border-rose-400 focus:ring-1 focus:ring-rose-400/40"
+                              : formData.phone && phoneValidation.isValid
+                              ? "border border-emerald-500/70 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40"
+                              : "border border-slate-800 focus:border-sky-500/50"
+                          }`}
+                          placeholder="(555) 123-4567"
+                        />
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                          {touched.phone && phoneValidation.error ? (
+                            <AlertCircle size={16} className="text-rose-400" />
+                          ) : formData.phone && phoneValidation.isValid ? (
+                            <CheckCircle size={16} className="text-emerald-400" />
+                          ) : null}
+                        </div>
+                      </div>
+
+                      {touched.phone && phoneValidation.error && (
+                        <p className="text-[11px] text-rose-400 flex items-start gap-1 leading-tight ml-1">
+                          <span>•</span>
+                          <span>{phoneValidation.error}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -197,8 +319,8 @@ export default function ContactPage() {
 
                   <button 
                     type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full bg-emerald-400 hover:bg-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed text-[#030d1b] font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 transition duration-200 mt-2 cursor-pointer shadow-lg shadow-emerald-950/40"
+                    disabled={isSubmitting || (touched.email && !emailValidation.isValid) || (touched.phone && !phoneValidation.isValid)}
+                    className="w-full bg-emerald-400 hover:bg-emerald-300 disabled:opacity-50 disabled:cursor-not-allowed text-[#030d1b] font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 transition duration-200 mt-2 cursor-pointer shadow-lg shadow-emerald-950/40"
                   >
                     {isSubmitting ? (
                       <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#030d1b] border-t-transparent" />

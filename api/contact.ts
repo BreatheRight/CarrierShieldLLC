@@ -1,6 +1,6 @@
 /**
  * Simple Resend serverless function for Vercel.
- * Matches standard Mailgun/Resend tutorial patterns.
+ * Delivers submissions to sales@fleetintegra.com (or admin fallback if registered with admin).
  */
 export default async function handler(req: any, res: any) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -39,7 +39,8 @@ ${message || "No message provided"}
   `.trim();
 
   try {
-    // 1. Primary Attempt: Send from verified domain to sales@fleetintegra.com
+    // 1. Attempt sending to sales@fleetintegra.com
+    // (Works directly if your Resend account is sales@fleetintegra.com or if domain is verified)
     let resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -47,7 +48,7 @@ ${message || "No message provided"}
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Fleet Integra <sales@fleetintegra.com>",
+        from: "Fleet Integra <onboarding@resend.dev>",
         to: ["sales@fleetintegra.com"],
         reply_to: email || undefined,
         subject: `New Fleet Inquiry: ${name || "Prospective Client"} (${company || "Carrier"})`,
@@ -57,8 +58,7 @@ ${message || "No message provided"}
 
     let resData = await resendResponse.json();
 
-    // 2. Fallback Attempt: If fleetintegra.com domain DNS is not yet verified in Resend,
-    // deliver to your registered Resend account address (admin@fleetintegra.com) using onboarding@resend.dev
+    // 2. If the API key belongs to the admin@fleetintegra.com account, fallback to admin address
     if (!resendResponse.ok && resData?.name === "validation_error") {
       const fallbackResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -70,18 +70,17 @@ ${message || "No message provided"}
           from: "Fleet Integra Demo <onboarding@resend.dev>",
           to: ["admin@fleetintegra.com"],
           reply_to: email || undefined,
-          subject: `[Demo / Test Mode] New Fleet Inquiry: ${name || "Prospective Client"} (${company || "Carrier"})`,
+          subject: `[Demo] New Fleet Inquiry: ${name || "Prospective Client"} (${company || "Carrier"})`,
           text: emailBody,
         }),
       });
 
       const fallbackData = await fallbackResponse.json();
-
       if (fallbackResponse.ok) {
         return res.status(200).json({
           success: true,
           id: fallbackData.id,
-          note: "Delivered to admin@fleetintegra.com via test mode (domain verification pending).",
+          recipient: "admin@fleetintegra.com",
         });
       }
     }
@@ -91,7 +90,11 @@ ${message || "No message provided"}
       return res.status(resendResponse.status).json({ success: false, error: resData });
     }
 
-    return res.status(200).json({ success: true, id: resData.id });
+    return res.status(200).json({
+      success: true,
+      id: resData.id,
+      recipient: "sales@fleetintegra.com",
+    });
   } catch (err: any) {
     console.error("Error sending email:", err);
     return res.status(500).json({ success: false, error: err.message });

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState, type ChangeEvent, type FormEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Calendar, ArrowRight, ShieldCheck, CheckCircle2, User, Building2, Mail, Phone, Truck } from "lucide-react";
+import { X, Calendar, ArrowRight, ShieldCheck, CheckCircle2, User, Building2, Mail, Phone, Truck, AlertCircle, Check } from "lucide-react";
 import { submitContactForm } from "../services/contactService";
+import { formatPhoneNumber, validatePhoneNumber, validateEmail } from "../utils/validation";
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -18,11 +19,37 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     role: "Fleet Manager",
   });
   
+  const [allowPersonalEmail, setAllowPersonalEmail] = useState(false);
+  const [touched, setTouched] = useState({ email: false, phone: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
+  const emailValidation = validateEmail(formData.email, allowPersonalEmail);
+  const phoneValidation = validatePhoneNumber(formData.phone);
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setFormData({ ...formData, phone: formatted });
+    if (!touched.phone && e.target.value.length > 2) {
+      setTouched((prev) => ({ ...prev, phone: true }));
+    }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, email: e.target.value });
+    if (!touched.email && e.target.value.length > 3) {
+      setTouched((prev) => ({ ...prev, email: true }));
+    }
+  };
+
   const handleSubmit = async (e: import("react").FormEvent) => {
     e.preventDefault();
+    setTouched({ email: true, phone: true });
+
+    if (!emailValidation.isValid || !phoneValidation.isValid) {
+      return;
+    }
+
     setIsSubmitting(true);
     
     try {
@@ -132,10 +159,18 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   </div>
 
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {/* Business Email */}
                     <div>
-                      <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-1">
-                        Business Email
-                      </label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider">
+                          Business Email
+                        </label>
+                        {formData.email && emailValidation.isValid && emailValidation.isProfessional && (
+                          <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1">
+                            <Check size={12} /> Company Domain
+                          </span>
+                        )}
+                      </div>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                           <Mail size={16} />
@@ -144,17 +179,62 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                           type="email"
                           required
                           value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          onBlur={() => setTouched(prev => ({ ...prev, email: true }))}
+                          onChange={handleEmailChange}
                           placeholder="john@company.com"
-                          className="w-full rounded-lg border border-slate-700 bg-slate-900/60 py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                          className={`w-full rounded-lg py-2.5 pl-10 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none transition ${
+                            touched.email && emailValidation.error
+                              ? "border border-rose-500/80 bg-slate-900/80 focus:border-rose-400 focus:ring-1 focus:ring-rose-400/40"
+                              : formData.email && emailValidation.isValid
+                              ? "border border-emerald-500/70 bg-slate-900/60 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40"
+                              : "border border-slate-700 bg-slate-900/60 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400"
+                          }`}
                         />
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                          {touched.email && emailValidation.error ? (
+                            <AlertCircle size={16} className="text-rose-400" />
+                          ) : formData.email && emailValidation.isValid ? (
+                            <CheckCircle2 size={16} className="text-emerald-400" />
+                          ) : null}
+                        </div>
                       </div>
+
+                      {touched.email && emailValidation.error && (
+                        <div className="space-y-1 mt-1">
+                          <p className="text-[11px] text-rose-400 flex items-start gap-1 leading-tight">
+                            <span>•</span>
+                            <span>{emailValidation.error}</span>
+                          </p>
+                          {!allowPersonalEmail && emailValidation.error.includes("Free domains") && (
+                            <button
+                              type="button"
+                              onClick={() => setAllowPersonalEmail(true)}
+                              className="text-[11px] text-sky-400 hover:text-sky-300 underline font-medium cursor-pointer block"
+                            >
+                              Independent owner-operator? Click to use personal email
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      {emailValidation.warning && (
+                        <p className="text-[11px] text-amber-400/90 leading-tight mt-1">
+                          {emailValidation.warning}
+                        </p>
+                      )}
                     </div>
 
+                    {/* Phone Number */}
                     <div>
-                      <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-1">
-                        Phone Number
-                      </label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider">
+                          Phone Number
+                        </label>
+                        {formData.phone && phoneValidation.isValid && (
+                          <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1">
+                            <Check size={12} /> Valid 10-Digit
+                          </span>
+                        )}
+                      </div>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                           <Phone size={16} />
@@ -163,11 +243,32 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                           type="tel"
                           required
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
+                          onChange={handlePhoneChange}
                           placeholder="(555) 000-0000"
-                          className="w-full rounded-lg border border-slate-700 bg-slate-900/60 py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                          className={`w-full rounded-lg py-2.5 pl-10 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none transition ${
+                            touched.phone && phoneValidation.error
+                              ? "border border-rose-500/80 bg-slate-900/80 focus:border-rose-400 focus:ring-1 focus:ring-rose-400/40"
+                              : formData.phone && phoneValidation.isValid
+                              ? "border border-emerald-500/70 bg-slate-900/60 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40"
+                              : "border border-slate-700 bg-slate-900/60 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400"
+                          }`}
                         />
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                          {touched.phone && phoneValidation.error ? (
+                            <AlertCircle size={16} className="text-rose-400" />
+                          ) : formData.phone && phoneValidation.isValid ? (
+                            <CheckCircle2 size={16} className="text-emerald-400" />
+                          ) : null}
+                        </div>
                       </div>
+
+                      {touched.phone && phoneValidation.error && (
+                        <p className="text-[11px] text-rose-400 flex items-start gap-1 leading-tight mt-1">
+                          <span>•</span>
+                          <span>{phoneValidation.error}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -216,8 +317,8 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="relative mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-green-600 px-5 py-3 text-sm font-semibold text-[#030d1b] shadow-lg shadow-emerald-500/20 hover:brightness-110 active:scale-98 transition duration-200 disabled:opacity-75"
+                    disabled={isSubmitting || (touched.email && !emailValidation.isValid) || (touched.phone && !phoneValidation.isValid)}
+                    className="relative mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-green-600 px-5 py-3 text-sm font-semibold text-[#030d1b] shadow-lg shadow-emerald-500/20 hover:brightness-110 active:scale-98 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#030d1b] border-t-transparent" />

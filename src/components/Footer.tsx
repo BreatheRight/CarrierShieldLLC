@@ -1,19 +1,43 @@
-import { Mail, Phone, MapPin, ShieldAlert, HeartHandshake, FileText, Facebook, Instagram, Linkedin, Shield } from "lucide-react";
+import { Mail, Phone, MapPin, ShieldAlert, HeartHandshake, FileText, Facebook, Instagram, Linkedin, Shield, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import FleetIntegraLogo from "./FleetIntegraLogo";
 import LegalModal, { LegalDocType } from "./LegalModal";
+import { submitContactForm } from "../services/contactService";
+import { validateEmail } from "../utils/validation";
 
 export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
   const [newsEmail, setNewsEmail] = useState("");
+  const [touched, setTouched] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [legalDoc, setLegalDoc] = useState<LegalDocType>(null);
 
-  const handleNewsSubmit = (e: import("react").FormEvent) => {
+  const emailValidation = validateEmail(newsEmail, true); // Allow personal domains for newsletter
+
+  const handleNewsSubmit = async (e: import("react").FormEvent) => {
     e.preventDefault();
-    setSuccess(true);
-    setNewsEmail("");
-    setTimeout(() => setSuccess(false), 3000);
+    setTouched(true);
+    if (!newsEmail || !emailValidation.isValid) return;
+    setIsSubmitting(true);
+    try {
+      await submitContactForm({
+        name: "Newsletter Subscriber",
+        email: newsEmail,
+        serviceInterest: "FMCSA Regulatory Alerts Subscription",
+        message: "User subscribed to weekly FMCSA Regulatory & Compliance alerts via footer.",
+        source: "Footer Newsletter Subscription",
+      });
+      setSuccess(true);
+      setNewsEmail("");
+      setTouched(false);
+      setTimeout(() => setSuccess(false), 4000);
+    } catch (err) {
+      console.error("Newsletter submission error:", err);
+      setSuccess(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const navLinks = [
@@ -155,15 +179,29 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
                   type="email"
                   required
                   value={newsEmail}
-                  onChange={(e) => setNewsEmail(e.target.value)}
+                  onBlur={() => setTouched(true)}
+                  onChange={(e) => {
+                    setNewsEmail(e.target.value);
+                    if (!touched && e.target.value.length > 3) setTouched(true);
+                  }}
                   placeholder="safety-director@carrier.com"
-                  className="w-full rounded bg-[#030d1b] border border-blue-950 px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
+                  className={`w-full rounded bg-[#030d1b] px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none transition ${
+                    touched && emailValidation.error
+                      ? "border border-rose-500/80 focus:border-rose-400"
+                      : "border border-blue-950 focus:border-emerald-400"
+                  }`}
                 />
+                {touched && emailValidation.error && (
+                  <p className="text-[11px] text-rose-400 leading-tight">
+                    {emailValidation.error}
+                  </p>
+                )}
                 <button
                   type="submit"
-                  className="w-full rounded bg-sky-400 hover:bg-sky-300 text-[#030d1b] font-bold text-xs py-2 transition"
+                  disabled={isSubmitting || (touched && !emailValidation.isValid)}
+                  className="w-full rounded bg-sky-400 hover:bg-sky-300 disabled:opacity-50 disabled:cursor-not-allowed text-[#030d1b] font-bold text-xs py-2 transition cursor-pointer"
                 >
-                  {success ? "Subscribed Successfully!" : "Yes, Send Compliance Alerts"}
+                  {isSubmitting ? "Subscribing..." : success ? "Subscribed Successfully!" : "Yes, Send Compliance Alerts"}
                 </button>
               </form>
             </div>

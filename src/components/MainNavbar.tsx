@@ -122,7 +122,17 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center group">
+        <Link
+          to="/"
+          onClick={(e) => {
+            if (window.location.pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+          className="flex items-center group cursor-pointer"
+          aria-label="Fleet Integra Home"
+        >
           <FleetIntegraLogo size="md" />
         </Link>
 

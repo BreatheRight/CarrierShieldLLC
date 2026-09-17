@@ -13,7 +13,18 @@ export default function FleetIntegraLogo({
   showTagline = true,
   variant = "horizontal",
 }: FleetIntegraLogoProps) {
-  const [imgSrc, setImgSrc] = useState("/fleet-integra-graphic.png");
+  const [hasError, setHasError] = useState(false);
+  const [imgSrc, setImgSrc] = useState("/fleet-integra-logo.svg");
+
+  const handleImageError = () => {
+    if (imgSrc === "/fleet-integra-logo.svg") {
+      setImgSrc("/fleet-integra-graphic.png");
+    } else if (imgSrc === "/fleet-integra-graphic.png") {
+      setImgSrc("/fleet-integra-graphic.jpg");
+    } else {
+      setHasError(true);
+    }
+  };
 
   // Sizing mappings for graphic icon and executive typography
   const config = {
@@ -45,30 +56,58 @@ export default function FleetIntegraLogo({
 
   const current = config[size] || config.md;
 
-  const handleImageError = () => {
-    if (imgSrc === "/fleet-integra-graphic.png") {
-      setImgSrc("/fleet-integra-graphic.jpg");
-    } else if (imgSrc === "/fleet-integra-graphic.jpg") {
-      setImgSrc("/fleet-integra-logo.jpg");
-    }
-  };
-
   return (
     <div
       className={`inline-flex items-center ${
         variant === "vertical" ? "flex-col text-center" : "flex-row text-left"
       } ${current.gap} group ${className}`}
     >
-      {/* Isolated Graphic Emblem (Truck silhouette, FI blue letters, and abstract background shape - text removed) */}
-      <div className="relative flex-shrink-0 flex items-center justify-center">
-        <img
-          src={imgSrc}
-          alt="Fleet Integra Emblem"
-          onError={handleImageError}
-          className={`${current.img} object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_10px_rgba(56,189,248,0.25)]`}
-          referrerPolicy="no-referrer"
-          loading="eager"
-        />
+      {/* Isolated Graphic Emblem */}
+      <div className={`relative flex-shrink-0 flex items-center justify-center ${current.img}`}>
+        {!hasError ? (
+          <img
+            src={imgSrc}
+            alt=""
+            aria-hidden="true"
+            onError={handleImageError}
+            className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_10px_rgba(56,189,248,0.25)]"
+            referrerPolicy="no-referrer"
+            loading="eager"
+          />
+        ) : (
+          /* Inline SVG Fallback ensuring zero broken image icons */
+          <svg
+            viewBox="0 0 100 100"
+            className="w-full h-full drop-shadow-[0_2px_10px_rgba(56,189,248,0.25)]"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M50 8L86 22V50C86 72 69 88 50 94C31 88 14 72 14 50V22L50 8Z"
+              fill="#081d38"
+              stroke="#38bdf8"
+              strokeWidth="4"
+            />
+            <path
+              d="M50 18L76 29V50C76 66 64 78 50 83C36 78 24 66 24 50V29L50 18Z"
+              fill="#030d1b"
+              stroke="#0284c7"
+              strokeWidth="2"
+            />
+            <text
+              x="50"
+              y="58"
+              textAnchor="middle"
+              fill="#38bdf8"
+              fontSize="24"
+              fontWeight="900"
+              fontFamily="sans-serif"
+            >
+              FI
+            </text>
+          </svg>
+        )}
       </div>
 
       {/* Pronounced Executive Brand Typography */}
