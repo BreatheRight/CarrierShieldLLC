@@ -17,6 +17,7 @@ import ServicesPage from "./pages/ServicesPage";
 import PricingPage from "./pages/PricingPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import FeedbackPage from "./pages/FeedbackPage";
 import CookieConsentBanner from "./components/CookieConsentBanner";
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/remote-safety-compliance" element={<RemoteSafetyCompliancePage onOpenDemo={openDemo} />} />
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/feedback" element={<FeedbackPage />} />
             <Route path="/terms-of-service" element={<TermsOfServicePage />} />
             <Route path="/terms" element={<TermsOfServicePage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />

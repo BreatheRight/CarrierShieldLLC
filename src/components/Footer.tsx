@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, ShieldAlert, HeartHandshake, FileText, Facebook, Instagram, Linkedin, Shield, AlertCircle } from "lucide-react";
+import { Mail, Phone, MapPin, ShieldAlert, HeartHandshake, FileText, Facebook, Instagram, Linkedin, Shield, AlertCircle, MessageSquarePlus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import FleetIntegraLogo from "./FleetIntegraLogo";
@@ -49,6 +49,7 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
         { label: "Resources", href: "/resources" },
         { label: "Pricing & Plans", href: "/pricing" },
         { label: "Contact Us", href: "/contact" },
+        { label: "Feedback & Bug Report", href: "/feedback" },
       ],
     },
     {
@@ -263,6 +264,13 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
               >
                 Accessibility
               </button>
+              <Link
+                to="/feedback"
+                className="hover:text-sky-400 text-slate-400 transition-colors underline-offset-2 hover:underline flex items-center gap-1 font-medium"
+              >
+                <MessageSquarePlus size={11} className="text-sky-400" />
+                <span>Feedback &amp; Bug Report</span>
+              </Link>
             </div>
           </div>
 

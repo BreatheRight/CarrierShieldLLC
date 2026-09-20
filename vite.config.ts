@@ -5,10 +5,13 @@ import {defineConfig, Plugin} from 'vite';
 
 function localDevApiPlugin(): Plugin {
   return {
-    name: 'local-dev-api-contact',
+    name: 'local-dev-api',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (req.url?.startsWith('/api/contact') && req.method === 'POST') {
+        const isContact = req.url?.startsWith('/api/contact');
+        const isFeedback = req.url?.startsWith('/api/feedback');
+
+        if ((isContact || isFeedback) && req.method === 'POST') {
           let bodyStr = '';
           req.on('data', (chunk) => {
             bodyStr += chunk;
@@ -35,7 +38,8 @@ function localDevApiPlugin(): Plugin {
                 }),
               };
 
-              const module = await server.ssrLoadModule('./api/contact.ts');
+              const modulePath = isFeedback ? './api/feedback.ts' : './api/contact.ts';
+              const module = await server.ssrLoadModule(modulePath);
               const handler = module.default;
               await handler(fakeReq, fakeRes);
             } catch (err: any) {

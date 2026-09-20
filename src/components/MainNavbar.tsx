@@ -14,7 +14,8 @@ import {
   ArrowRight, 
   Phone,
   Calendar,
-  ShieldCheck
+  ShieldCheck,
+  MessageSquarePlus
 } from "lucide-react";
 import FleetIntegraLogo from "./FleetIntegraLogo";
 
@@ -423,6 +424,17 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
                     className="flex items-center justify-between px-3 py-3 rounded-lg text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors"
                   >
                     <span>Contact Us</span>
+                  </Link>
+
+                  <Link
+                    to="/feedback"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-3 rounded-lg text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <MessageSquarePlus size={16} className="text-sky-400" />
+                      <span>Feedback &amp; Bug Report</span>
+                    </span>
                   </Link>
                 </div>
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Search, LogIn, Phone, Shield, X, Bell } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Search, LogIn, Phone, Shield, X, Bell, MessageSquarePlus } from "lucide-react";
 
 interface TopUtilityBarProps {
   onOpenDemo: () => void;
@@ -67,6 +68,16 @@ export default function TopUtilityBar({ onOpenDemo }: TopUtilityBarProps) {
             />
             <Search size={11} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" />
           </div>
+
+          {/* Feedback & Bug Report Link */}
+          <Link
+            to="/feedback"
+            className="flex items-center gap-1.5 hover:text-white font-medium transition-colors cursor-pointer"
+            title="Report a bug or submit feedback"
+          >
+            <MessageSquarePlus size={11} className="text-sky-400" />
+            <span>Feedback</span>
+          </Link>
 
           {/* Quick Client Portal */}
           <a
