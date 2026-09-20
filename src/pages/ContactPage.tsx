@@ -68,10 +68,10 @@ export default function ContactPage() {
 
   return (
     <div className="font-sans bg-[#020712] min-h-screen">
-      <section className="pt-16 pb-20 md:pt-24 md:pb-32 relative overflow-hidden">
+      <section className="pt-16 pb-20 md:pt-24 md:pb-28 relative overflow-hidden">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-sky-500/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
         
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
             
             {/* Left side info */}
@@ -125,7 +125,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right side form */}
-            <div className="bg-[#030d1b] border border-blue-900/30 p-8 md:p-10 rounded-2xl shadow-2xl relative">
+            <div className="bg-[#030d1b] border border-blue-900/30 p-6 sm:p-8 md:p-10 rounded-2xl shadow-2xl relative">
               <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none rounded-2xl" />
               
               {isSubmitted ? (

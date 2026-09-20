@@ -51,10 +51,10 @@ export default function PricingPage() {
     <div className="font-sans bg-[#020712] min-h-screen text-slate-100 pb-20">
       
       {/* Header Section */}
-      <section className="bg-[#030d1b] pt-20 pb-16 relative overflow-hidden border-b border-blue-950/40">
+      <section className="bg-[#030d1b] pt-16 pb-16 md:pt-24 md:pb-20 relative overflow-hidden border-b border-blue-950/40">
         <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-sky-500/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2" />
         
-        <div className="max-w-4xl mx-auto px-4 md:px-6 relative z-10 text-center space-y-6">
+        <div className="max-w-4xl mx-auto px-6 md:px-8 relative z-10 text-center space-y-6">
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1]">
             Services & Pricing
           </h1>
@@ -72,7 +72,7 @@ export default function PricingPage() {
       </section>
 
       {/* Pricing Content */}
-      <section className="max-w-4xl mx-auto px-4 md:px-6 mt-12 space-y-16">
+      <section className="max-w-4xl mx-auto px-6 md:px-8 mt-12 md:mt-16 space-y-16">
 
         {/* Section 1 */}
         <div className="space-y-6">
@@ -142,8 +142,8 @@ export default function PricingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="max-w-4xl mx-auto px-4 md:px-6 mt-20">
-        <div className="relative rounded-2xl border border-emerald-900/30 bg-gradient-to-tr from-[#031024] to-[#04203a] p-8 md:p-12 text-center overflow-hidden shadow-2xl">
+      <section className="max-w-4xl mx-auto px-6 md:px-8 mt-20 md:mt-24">
+        <div className="relative rounded-2xl border border-emerald-900/30 bg-gradient-to-tr from-[#031024] to-[#04203a] p-6 sm:p-8 md:p-12 text-center overflow-hidden shadow-2xl">
           <div className="relative z-10 space-y-6 max-w-2xl mx-auto">
             <h2 className="font-display text-2xl md:text-3xl font-bold text-white">
               Need help choosing the right service?

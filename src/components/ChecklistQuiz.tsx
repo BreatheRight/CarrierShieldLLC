@@ -48,8 +48,8 @@ export default function ChecklistQuiz({ onOpenDemo }: { onOpenDemo: () => void }
   }, 0);
 
   return (
-    <div className="bg-[#030d1b] pb-24 md:pb-32 font-sans relative">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+    <div className="bg-[#030d1b] pb-20 md:pb-28 font-sans relative">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
         
         <div className="rounded-2xl border border-blue-900/30 bg-[#071329] p-6 md:p-10 relative overflow-hidden shadow-2xl">
           {/* Flare decor */}

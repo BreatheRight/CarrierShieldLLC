@@ -74,7 +74,7 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
   return (
     <>
       <footer className="bg-[#020712] border-t border-blue-950/60 pb-12 pt-16 text-slate-400 font-sans">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
           
           {/* Top Grid section */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-12">

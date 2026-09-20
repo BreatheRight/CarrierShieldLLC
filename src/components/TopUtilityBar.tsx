@@ -13,7 +13,7 @@ export default function TopUtilityBar({ onOpenDemo }: TopUtilityBarProps) {
     <div className="relative z-40 bg-[#020813] border-b border-blue-950/40 text-xs text-slate-300">
       {/* Alert banner */}
       {showNotification && (
-        <div className="bg-[#1e1b4b] border-b border-blue-900/30 py-1.5 px-4 text-center flex items-center justify-center gap-2">
+        <div className="bg-[#1e1b4b] border-b border-blue-900/30 py-2 px-6 text-center flex items-center justify-center gap-2">
           <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-400 uppercase tracking-widest bg-sky-950 px-1.5 py-0.5 rounded border border-sky-900/40">
             Compliance Alert
           </span>
@@ -37,7 +37,7 @@ export default function TopUtilityBar({ onOpenDemo }: TopUtilityBarProps) {
       )}
 
       {/* Main Bar */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 h-9 flex items-center justify-between gap-4 font-sans">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 h-9 flex items-center justify-between gap-4 font-sans">
         {/* Support & Direct Line */}
         <div className="flex items-center gap-4">
           <a 

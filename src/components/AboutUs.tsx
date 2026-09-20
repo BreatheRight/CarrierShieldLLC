@@ -2,9 +2,9 @@ import { Info } from "lucide-react";
 
 export default function AboutUs() {
   return (
-    <section id="why-us" className="bg-[#030d1b] pt-8 pb-20 md:pb-28">
-      <div className="max-w-4xl mx-auto px-4 md:px-6">
-        <div className="rounded-2xl border border-blue-900/30 bg-gradient-to-tr from-[#071329] to-[#04203a] p-8 md:p-12 shadow-2xl relative overflow-hidden">
+    <section id="why-us" className="bg-[#030d1b] pt-4 pb-20 md:pb-28">
+      <div className="max-w-4xl mx-auto px-6 md:px-8">
+        <div className="rounded-2xl border border-blue-900/30 bg-gradient-to-tr from-[#071329] to-[#04203a] p-6 sm:p-8 md:p-12 shadow-2xl relative overflow-hidden">
           {/* Ambient circular decors */}
           <div className="absolute inset-0 bg-[#030d1b]/40 pointer-events-none" />
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />

@@ -22,7 +22,7 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
   };
 
   return (
-    <section className="relative bg-[#030d1b] pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden font-sans">
+    <section className="relative bg-[#030d1b] pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden font-sans">
       {/* Background abstract ambient flares */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-sky-500/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
       <div className="absolute bottom-0 right-10 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none translate-y-1/3" />
@@ -30,7 +30,7 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
       {/* Subtle grid pattern background */}
       <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column: Core Value Pitch */}

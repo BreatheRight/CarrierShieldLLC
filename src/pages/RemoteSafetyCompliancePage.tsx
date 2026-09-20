@@ -152,11 +152,11 @@ export default function RemoteSafetyCompliancePage({ onOpenDemo }: RemoteSafetyC
     <div className="font-sans bg-[#020712] min-h-screen">
       
       {/* Hero Section */}
-      <section className="bg-[#030d1b] pt-20 pb-24 md:pt-32 md:pb-36 relative overflow-hidden border-b border-blue-950/40">
+      <section className="bg-[#030d1b] pt-16 pb-20 md:pt-24 md:pb-28 relative overflow-hidden border-b border-blue-950/40">
         <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[100px] pointer-events-none -translate-y-1/2" />
         <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[80px] pointer-events-none translate-y-1/2" />
         
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 text-center max-w-4xl">
+        <div className="max-w-4xl mx-auto px-6 md:px-8 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-[#020712] border border-blue-900/50 px-4 py-2 text-xs font-bold text-sky-400 mb-8 uppercase tracking-widest shadow-xl">
             <ShieldCheck className="h-4 w-4" />
             <span>Comprehensive Management</span>
@@ -171,8 +171,8 @@ export default function RemoteSafetyCompliancePage({ onOpenDemo }: RemoteSafetyC
       </section>
 
       {/* Alternating Sections */}
-      <section className="py-20 md:py-32 relative">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-24 md:space-y-40">
+      <section className="py-20 md:py-28 relative">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 space-y-20 md:space-y-32">
           
           {sections.map((section, idx) => {
             const isEven = idx % 2 === 0;
@@ -243,10 +243,10 @@ export default function RemoteSafetyCompliancePage({ onOpenDemo }: RemoteSafetyC
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#030d1b] py-24 md:py-32 border-t border-blue-950/40 relative overflow-hidden">
+      <section className="bg-[#030d1b] py-20 md:py-28 border-t border-blue-950/40 relative overflow-hidden">
         <div className="absolute bottom-0 left-1/2 w-[800px] h-[400px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -translate-x-1/2 translate-y-1/2" />
         
-        <div className="max-w-4xl mx-auto px-4 md:px-6 text-center relative z-10">
+        <div className="max-w-4xl mx-auto px-6 md:px-8 text-center relative z-10">
           <h2 className="font-display text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-8">
             Ready to secure your fleet?
           </h2>

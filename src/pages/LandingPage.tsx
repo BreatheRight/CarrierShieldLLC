@@ -10,7 +10,7 @@ import {
   ShieldCheck, 
   Calendar, 
   Users, 
-  Sparkles, 
+  // Sparkles, // Shelved with Telemetry Simulator component
   Check, 
   ChevronDown, 
   ChevronUp, 
@@ -25,8 +25,9 @@ import {
 import HeroSection from "../components/HeroSection";
 import AboutUs from "../components/AboutUs";
 import FeaturesPreview from "../components/FeaturesPreview";
-import FleetTelemetrySim from "../components/FleetTelemetrySim";
-import RoiCalculator from "../components/RoiCalculator";
+// Shelved components (intended for future client portal integration)
+// import FleetTelemetrySim from "../components/FleetTelemetrySim";
+// import RoiCalculator from "../components/RoiCalculator";
 import ChecklistQuiz from "../components/ChecklistQuiz";
 import ContactUs from "../components/ContactUs";
 
@@ -134,9 +135,13 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
       {/* 4. Complete Capabilities Section */}
       <FeaturesPreview />
 
-      {/* 5. Live Fleet Telemetry interactive monitor */}
-      <section className="bg-[#030d1b] pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
+      {/* 
+        SHELVED COMPONENT (Temporarily removed per stakeholder review; intended for reinstatement with client portal):
+        5. Live Fleet Telemetry interactive monitor
+      */}
+      {/*
+      <section className="bg-[#030d1b] pb-20 md:pb-28">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
           
           <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-[#4ade80]">
@@ -156,16 +161,22 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
           <FleetTelemetrySim />
         </div>
       </section>
+      */}
 
       {/* 6. Self-Audit Compliance Checklist Quiz */}
       <ChecklistQuiz onOpenDemo={onOpenDemo} />
 
-      {/* 7. Interactive ROI saving calculator */}
-      <section className="bg-[#030d1b] pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
+      {/* 
+        SHELVED COMPONENT (Temporarily removed per stakeholder review; intended for reinstatement with client portal):
+        7. Interactive ROI saving calculator
+      */}
+      {/*
+      <section className="bg-[#030d1b] pb-20 md:pb-28">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
           <RoiCalculator onOpenDemo={onOpenDemo} />
         </div>
       </section>
+      */}
 
       {/* 8. Satisfied Client Case Studies / Testimonials (Commented out until customer reviews & case studies are established) */}
       {/* 
@@ -236,8 +247,8 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
       */}
 
       {/* 9. FAQs Accordion */}
-      <section className="bg-[#030d1b] py-24 md:py-32">
-        <div className="max-w-4xl mx-auto px-4 md:px-6">
+      <section className="bg-[#030d1b] py-20 md:py-28">
+        <div className="max-w-4xl mx-auto px-6 md:px-8">
           
           <div className="text-center space-y-4 mb-14">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-sky-400">
@@ -288,9 +299,9 @@ export default function LandingPage({ onOpenDemo }: { onOpenDemo: () => void }) 
       </section>
 
       {/* 10. Call-to-Action conversion banner */}
-      <section className="bg-[#030d1b] pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="relative rounded-2xl border border-blue-900/30 bg-gradient-to-tr from-[#071329] to-[#04203a] p-8 md:p-14 text-center overflow-hidden shadow-2xl">
+      <section className="bg-[#030d1b] pb-20 md:pb-28">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+          <div className="relative rounded-2xl border border-blue-900/30 bg-gradient-to-tr from-[#071329] to-[#04203a] p-6 sm:p-8 md:p-14 text-center overflow-hidden shadow-2xl">
             
             {/* Ambient circular decors */}
             <div className="absolute inset-0 bg-[#030d1b]/40 pointer-events-none" />

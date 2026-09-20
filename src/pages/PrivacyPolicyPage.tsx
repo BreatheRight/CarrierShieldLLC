@@ -3,8 +3,8 @@ import { ArrowLeft, Shield, Clock, Mail, Phone, MapPin } from "lucide-react";
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-[#030d1b] text-slate-200 py-12 md:py-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#030d1b] text-slate-200 py-16 md:py-24">
+      <div className="max-w-4xl mx-auto px-6 sm:px-8">
         {/* Navigation Breadcrumb */}
         <div className="mb-8">
           <Link

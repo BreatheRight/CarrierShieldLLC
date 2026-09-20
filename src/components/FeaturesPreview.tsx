@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function FeaturesPreview() {
   return (
-    <section className="bg-[#030d1b] pb-24 md:pb-32 font-sans relative" id="solutions">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+    <section className="bg-[#030d1b] pb-20 md:pb-28 font-sans relative" id="solutions">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">

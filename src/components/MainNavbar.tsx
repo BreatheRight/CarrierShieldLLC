@@ -1,7 +1,21 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, ChevronDown, ShieldAlert, FileText, UserCheck, BarChart3, Truck, ArrowRight, HelpCircle } from "lucide-react";
+import { 
+  Menu, 
+  X, 
+  ChevronDown, 
+  ChevronRight,
+  ShieldAlert, 
+  FileText, 
+  UserCheck, 
+  BarChart3, 
+  Truck, 
+  ArrowRight, 
+  Phone,
+  Calendar,
+  ShieldCheck
+} from "lucide-react";
 import FleetIntegraLogo from "./FleetIntegraLogo";
 
 interface MainNavbarProps {
@@ -10,9 +24,33 @@ interface MainNavbarProps {
 
 export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [activeSolutionCategory, setActiveSolutionCategory] = useState("driver-compliance");
   const [scrolled, setScrolled] = useState(false);
+
+  // Prevent body scrolling when mobile drawer is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  // Handle ESC key to close mobile drawer
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
 
   // Shrink navbar slightly on scroll
   useEffect(() => {
@@ -120,7 +158,7 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
           : "bg-[#030d1b] py-4 border-b border-blue-950/20"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 flex items-center justify-between">
         {/* Logo */}
         <Link
           to="/"
@@ -227,47 +265,207 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg bg-slate-900 text-slate-200 hover:text-white border border-slate-800"
-            aria-label="Toggle menu"
+            className="lg:hidden p-2.5 rounded-lg bg-slate-900 text-slate-200 hover:text-white border border-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Slide-In Off-Canvas Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden w-full bg-[#030d1b] border-t border-blue-900/40 text-white overflow-hidden"
-          >
-            <div className="px-5 py-6 space-y-6">
-              <div className="flex flex-col gap-3">
-                {menuItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-lg font-medium text-slate-300 hover:text-white py-2"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+          <>
+            {/* Backdrop Overlay */}
+            <motion.div
+              key="mobile-drawer-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm lg:hidden"
+              aria-hidden="true"
+            />
+
+            {/* Slide-In Drawer Panel */}
+            <motion.div
+              key="mobile-drawer-panel"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-[340px] sm:max-w-sm bg-[#040d1e] border-l border-blue-900/50 shadow-2xl flex flex-col justify-between overflow-hidden lg:hidden text-slate-100"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile Navigation Menu"
+            >
+              {/* Drawer Top Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-blue-900/40 bg-[#030a16]">
+                <div className="flex items-center">
+                  <FleetIntegraLogo size="sm" />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 rounded-lg bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors border border-slate-700/60"
+                  aria-label="Close navigation menu"
+                >
+                  <X size={18} />
+                </button>
               </div>
 
-              <div className="h-px bg-blue-900/20" />
+              {/* Scrollable Navigation Links */}
+              <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+                <div className="space-y-1">
+                  <Link
+                    to="/"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-3 rounded-lg text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors"
+                  >
+                    <span>Home</span>
+                  </Link>
 
-              <a
-                href="tel:+12012937774"
-                className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-emerald-400 px-4 py-3 text-sm font-bold text-[#030d1b] hover:bg-emerald-300 transition duration-150"
-              >
-                <span>Call Us Now: +1 (201) 293-7774</span>
-              </a>
-            </div>
-          </motion.div>
+                  {/* Services Submenu Accordion */}
+                  <div className="rounded-lg overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                      className="w-full flex items-center justify-between px-3 py-3 text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors text-left"
+                    >
+                      <span>Services</span>
+                      <ChevronDown
+                        size={16}
+                        className={`text-slate-400 transition-transform duration-200 ${
+                          mobileServicesOpen ? "rotate-180 text-sky-400" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {mobileServicesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="pl-3 pr-2 py-1 space-y-1 bg-blue-950/30 border-l-2 border-sky-500/40 my-1 rounded-r-lg"
+                        >
+                          <Link
+                            to="/services"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block px-3 py-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors"
+                          >
+                            All Services Overview &rarr;
+                          </Link>
+                          <Link
+                            to="/pricing"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                          >
+                            Services &amp; Standard Pricing
+                          </Link>
+                          {solutionsData.map((category) => (
+                            <Link
+                              key={category.id}
+                              to="/services"
+                              onClick={() => {
+                                setActiveSolutionCategory(category.id);
+                                setIsMobileMenuOpen(false);
+                              }}
+                              className="block px-3 py-2 text-sm text-slate-300 hover:text-white transition-colors truncate"
+                            >
+                              {category.title}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <Link
+                    to="/remote-safety-compliance"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-3 rounded-lg text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors"
+                  >
+                    <span>Remote Safety &amp; Compliance</span>
+                  </Link>
+
+                  <Link
+                    to="/#why-us"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-3 rounded-lg text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors"
+                  >
+                    <span>Why Us?</span>
+                  </Link>
+
+                  <Link
+                    to="/pricing"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-3 rounded-lg text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors"
+                  >
+                    <span>Pricing</span>
+                  </Link>
+
+                  <Link
+                    to="/resources"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-3 rounded-lg text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors"
+                  >
+                    <span>Resources</span>
+                  </Link>
+
+                  <Link
+                    to="/contact"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-3 rounded-lg text-base font-semibold text-slate-200 hover:text-white hover:bg-blue-950/40 transition-colors"
+                  >
+                    <span>Contact Us</span>
+                  </Link>
+                </div>
+
+                {/* FMCSA Partner Card inside drawer */}
+                <div className="p-3.5 rounded-xl bg-blue-950/30 border border-blue-900/40 text-xs space-y-1.5">
+                  <div className="flex items-center gap-1.5 font-semibold text-sky-400">
+                    <ShieldCheck size={15} />
+                    <span>FMCSA &amp; DOT Compliance</span>
+                  </div>
+                  <p className="text-slate-400 text-[11px] leading-relaxed">
+                    Safety department management, audit defense, and fleet risk reduction.
+                  </p>
+                </div>
+              </div>
+
+              {/* Drawer Bottom Actions */}
+              <div className="p-6 border-t border-blue-900/40 bg-[#030a16] space-y-3">
+                <a
+                  href="tel:+12012937774"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-400 px-4 py-3 text-sm font-bold text-[#030d1b] hover:bg-emerald-300 shadow-lg shadow-emerald-500/10 active:scale-98 transition duration-150"
+                >
+                  <Phone size={16} />
+                  <span>Call Now: +1 (201) 293-7774</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenDemo();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/30 px-4 py-2.5 text-sm font-semibold text-sky-300 hover:text-white transition duration-150"
+                >
+                  <Calendar size={15} />
+                  <span>Schedule Consultation</span>
+                </button>
+
+                <div className="text-center pt-1">
+                  <span className="text-[10px] text-slate-500">Mon - Fri: 8am - 6pm EST</span>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

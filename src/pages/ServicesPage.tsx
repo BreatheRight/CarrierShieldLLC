@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 export default function ServicesPage() {
   return (
     <div className="font-sans">
-      <section className="bg-[#030d1b] pt-16 pb-12 relative overflow-hidden">
+      <section className="bg-[#030d1b] pt-16 pb-16 md:pt-24 md:pb-20 relative overflow-hidden">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-sky-500/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 text-center max-w-4xl">
+        <div className="max-w-4xl mx-auto px-6 md:px-8 relative z-10 text-center">
           <h1 className="font-display text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
             Fleet Integra Compliance Services
           </h1>
@@ -22,8 +22,8 @@ export default function ServicesPage() {
       <FeaturesPreview />
 
       {/* CTA Section */}
-      <section className="bg-[#020712] py-20 md:py-24 border-t border-blue-950/40">
-        <div className="max-w-4xl mx-auto px-4 md:px-6 text-center">
+      <section className="bg-[#020712] py-20 md:py-28 border-t border-blue-950/40">
+        <div className="max-w-4xl mx-auto px-6 md:px-8 text-center">
           <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-8">
             Ready to secure your fleet?
           </h2>
