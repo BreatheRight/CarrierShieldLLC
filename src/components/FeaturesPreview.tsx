@@ -21,8 +21,8 @@ export default function FeaturesPreview() {
             From sole operators to national enterprise logistics networks, our platform organizes your complete DOT and FMCSA regulatory workload in a single, high-tech command center.
           </p>
           <div className="pt-2">
-            <Link to="/pricing" className="text-sky-400 hover:text-sky-300 text-sm font-medium transition-colors">
-              View standard permit, registration, and compliance pricing &rarr;
+            <Link to="/services" className="text-sky-400 hover:text-sky-300 text-sm font-medium transition-colors">
+              Explore comprehensive permit, registration, and compliance services &rarr;
             </Link>
           </div>
         </div>

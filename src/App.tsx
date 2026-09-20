@@ -14,7 +14,7 @@ import RemoteSafetyCompliancePage from "./pages/RemoteSafetyCompliancePage";
 import ResourcesPage from "./pages/ResourcesPage";
 import ContactPage from "./pages/ContactPage";
 import ServicesPage from "./pages/ServicesPage";
-import PricingPage from "./pages/PricingPage";
+// import PricingPage from "./archive/PricingPage"; // Shelved per stakeholder requirement - preserved in src/archive/PricingPage.tsx
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import FeedbackPage from "./pages/FeedbackPage";
@@ -36,7 +36,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<LandingPage onOpenDemo={openDemo} />} />
             <Route path="/services" element={<ServicesPage />} />
+            {/* Shelved Pricing Route - preserved in src/archive/PricingPage.tsx
             <Route path="/pricing" element={<PricingPage />} />
+            */}
             <Route path="/remote-safety-compliance" element={<RemoteSafetyCompliancePage onOpenDemo={openDemo} />} />
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/contact" element={<ContactPage />} />

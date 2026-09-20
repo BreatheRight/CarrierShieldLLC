@@ -47,7 +47,7 @@ export default function Footer({ onOpenDemo }: { onOpenDemo: () => void }) {
         { label: "Home", href: "/" },
         { label: "Why Us?", href: "/#why-us" },
         { label: "Resources", href: "/resources" },
-        { label: "Pricing & Plans", href: "/pricing" },
+        // { label: "Pricing & Plans", href: "/pricing" }, // Shelved with Pricing Page archive
         { label: "Contact Us", href: "/contact" },
         { label: "Feedback & Bug Report", href: "/feedback" },
       ],

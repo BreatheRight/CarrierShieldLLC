@@ -208,11 +208,13 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
                         ))}
                       </div>
                       
+                      {/* Shelved with Pricing Page archive
                       <div className="mt-4 pt-4 border-t border-blue-900/30">
                         <Link to="/pricing" className="block w-full text-left px-4 py-3 rounded-lg text-sm font-semibold text-sky-400 hover:text-white hover:bg-slate-800 transition-all">
                           Pricing & Standard Service Fees &rarr;
                         </Link>
                       </div>
+                      */}
                     </div>
 
                     {/* Right Pane - Specific Services */}
@@ -361,6 +363,7 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
                           >
                             All Services Overview &rarr;
                           </Link>
+                          {/* Shelved with Pricing Page archive
                           <Link
                             to="/pricing"
                             onClick={() => setIsMobileMenuOpen(false)}
@@ -368,6 +371,7 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
                           >
                             Services &amp; Standard Pricing
                           </Link>
+                          */}
                           {solutionsData.map((category) => (
                             <Link
                               key={category.id}
@@ -402,6 +406,7 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
                     <span>Why Us?</span>
                   </Link>
 
+                  {/* Shelved with Pricing Page archive
                   <Link
                     to="/pricing"
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -409,6 +414,7 @@ export default function MainNavbar({ onOpenDemo }: MainNavbarProps) {
                   >
                     <span>Pricing</span>
                   </Link>
+                  */}
 
                   <Link
                     to="/resources"

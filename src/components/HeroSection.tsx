@@ -1,4 +1,4 @@
-import { ArrowRight, ShieldCheck, Play, Users, Calendar, Sparkles, Building2, Check, AlertCircle } from "lucide-react";
+import { ArrowRight, ShieldCheck, Play, Users, Calendar, Sparkles, Building2, Check, AlertCircle, Info } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { validateEmail } from "../utils/validation";
@@ -132,7 +132,7 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
 
               {/* Main Mockup container */}
               <div className="relative rounded-2xl border border-blue-900/30 bg-[#071329] p-4 text-white shadow-2xl overflow-hidden">
-                <div className="flex items-center justify-between border-b border-blue-950/40 pb-3 mb-4">
+                <div className="flex items-center justify-between border-b border-blue-950/40 pb-3 mb-3">
                   <div className="flex items-center gap-2">
                     <div className="flex gap-1.5">
                       <span className="h-2 w-2 rounded-full bg-red-400" />
@@ -140,13 +140,29 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
                       <span className="h-2 w-2 rounded-full bg-green-400" />
                     </div>
                     <span className="font-mono text-[10px] text-slate-400 uppercase tracking-widest pl-2">
-                      Fleet Integra Core Dashboard
+                      Fleet Integra Client Portal (Future Architecture Preview)
                     </span>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 rounded bg-[#030d1b] border border-blue-950/30 px-1.5 py-0.5 font-mono text-[9px] text-[#4ade80]">
-                    <ShieldCheck size={10} />
-                    <span>SECURE ELD</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 font-mono text-[9px] font-semibold text-amber-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+                    <span>IN DEVELOPMENT</span>
+                  </span>
+                </div>
+
+                {/* Classy Technology Preview Announcement Banner */}
+                <div className="mb-3 px-3 py-2 rounded-xl bg-gradient-to-r from-blue-950/80 via-[#071936]/80 to-blue-950/80 border border-sky-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-inner">
+                  <div className="flex items-center gap-2">
+                    <span className="p-1 rounded-md bg-sky-400/10 text-sky-400 flex-shrink-0">
+                      <Sparkles size={12} />
+                    </span>
+                    <p className="text-[11px] text-slate-200 leading-snug">
+                      <span className="font-semibold text-sky-400">Technology Preview:</span> Automated client portal currently in active engineering.
+                    </p>
+                  </div>
+                  <span className="inline-flex items-center gap-1 font-mono text-[10px] text-emerald-400 bg-emerald-950/60 border border-emerald-500/25 px-2 py-0.5 rounded self-start sm:self-auto whitespace-nowrap">
+                    <ShieldCheck size={11} />
+                    <span>Remote Services Active Today</span>
                   </span>
                 </div>
 
@@ -183,7 +199,7 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
                           <span className="text-emerald-400 font-mono">0 (Auto-fixed)</span>
                         </div>
                         <div className="flex justify-between text-[10px] text-slate-400">
-                          <span>Drug & Alcohol Cleared</span>
+                          <span>Drug &amp; Alcohol Cleared</span>
                           <span className="text-emerald-400 font-mono">100% compliant</span>
                         </div>
                       </div>
@@ -195,20 +211,22 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
                     <div className="bg-[#030d1b] border border-blue-950/50 p-3 rounded-xl h-full flex flex-col justify-between">
                       <div>
                         <h4 className="text-xs font-semibold text-slate-300">
-                          Compliance Quick Actions
+                          Compliance Modules
                         </h4>
                         <div className="space-y-1.5 mt-3">
                           <button 
                             onClick={onOpenDemo}
-                            className="w-full text-left bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-800 rounded p-1.5 font-medium transition cursor-pointer"
+                            className="w-full text-left bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-800 rounded p-1.5 font-medium transition cursor-pointer flex items-center justify-between"
                           >
-                            Update HOS Files
+                            <span>HOS Telemetry Ingestion</span>
+                            <span className="text-[9px] font-mono text-sky-400/80 bg-sky-950/60 px-1 py-0.2 rounded border border-sky-900/40">In Dev</span>
                           </button>
                           <button 
                             onClick={onOpenDemo}
-                            className="w-full text-left bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-800 rounded p-1.5 font-medium transition cursor-pointer"
+                            className="w-full text-left bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-800 rounded p-1.5 font-medium transition cursor-pointer flex items-center justify-between"
                           >
-                            Run Driver Check
+                            <span>Driver DQ Automated Sync</span>
+                            <span className="text-[9px] font-mono text-sky-400/80 bg-sky-950/60 px-1 py-0.2 rounded border border-sky-900/40">In Dev</span>
                           </button>
                         </div>
                       </div>
@@ -224,35 +242,42 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
 
                 </div>
 
-                {/* Simulated Image accent inside dashboard mockup (American conventional commercial semi-truck) */}
-                <div className="mt-3 relative h-40 rounded-xl overflow-hidden border border-blue-950/50 group">
+                {/* Prominently visible commercial semi-truck image from SiteImageAssets */}
+                <div className="mt-3 relative h-48 sm:h-52 rounded-xl overflow-hidden border border-blue-950/50 group">
                   <img
-                    src="/SiteImageAssets/us-fleet-truck.jpg"
-                    alt="US Interstate Fleet Semi-Truck"
+                    src="/SiteImageAssets/pexels-quintingellar-6563903.jpg"
+                    alt="US Commercial Interstate Semi-Truck Fleet on Highway"
                     onError={(e) => {
-                      // Fallback to high-res American conventional truck if needed
                       (e.currentTarget as HTMLImageElement).src =
-                        "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=1200";
+                        "/SiteImageAssets/pexels-braeson-holland-3640662-8994766.jpg";
                     }}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 brightness-90 relative z-0"
+                    className="w-full h-full object-cover object-[center_60%] group-hover:scale-105 transition-all duration-700 brightness-95 relative z-0"
                     referrerPolicy="no-referrer"
                   />
-                  {/* Glass overlay with play text */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#020712] via-transparent to-transparent opacity-60" />
+                  {/* Subtle gradient overlay with operational information */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#020712] via-transparent to-transparent opacity-75" />
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white z-10">
                     <div className="flex items-center gap-2">
-                      <div className="p-1.5 rounded-full bg-emerald-400 text-[#030d1b]">
-                        <Play size={10} fill="currentColor" />
+                      <div className="p-1.5 rounded-full bg-sky-400 text-[#030d1b]">
+                        <ShieldCheck size={12} />
                       </div>
                       <span className="text-[10px] font-semibold uppercase tracking-wider text-white">
-                        SaaS Automation Demo Video
+                        Active Fleet Compliance &amp; Safety Operations
                       </span>
                     </div>
 
-                    <span className="text-[10px] font-mono font-bold text-[#38bdf8] bg-sky-950/60 px-1.5 py-0.5 rounded">
-                      2 mins
+                    <span className="text-[10px] font-mono font-medium text-slate-300 bg-slate-950/80 border border-slate-800/80 px-2 py-0.5 rounded">
+                      Specialist Managed
                     </span>
                   </div>
+                </div>
+
+                {/* Prudent footnote clarifying live service delivery */}
+                <div className="mt-3 p-3 rounded-xl bg-[#030d1b]/90 border border-blue-950/60 flex items-start gap-2.5 text-xs text-slate-400">
+                  <Info size={14} className="text-sky-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-[11px] leading-relaxed text-slate-400">
+                    <strong className="text-slate-200">Current Service Delivery:</strong> Our Remote Safety &amp; Compliance package is fully active and delivered directly by experienced compliance officers. This automated client portal is an upcoming technology upgrade in development to further enhance future reporting.
+                  </p>
                 </div>
 
               </div>

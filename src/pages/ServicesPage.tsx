@@ -12,8 +12,8 @@ export default function ServicesPage() {
             Fleet Integra Compliance Services
           </h1>
           <div className="flex justify-center">
-            <Link to="/pricing" className="inline-flex items-center gap-2 rounded-lg bg-slate-900 border border-slate-800 px-6 py-3 text-sm font-semibold text-sky-400 hover:bg-slate-800 transition shadow-sm">
-              View Pricing & Standard Fees <ArrowRight size={16} />
+            <Link to="/contact" className="inline-flex items-center gap-2 rounded-lg bg-slate-900 border border-slate-800 px-6 py-3 text-sm font-semibold text-sky-400 hover:bg-slate-800 transition shadow-sm">
+              Request a Custom Compliance Quote <ArrowRight size={16} />
             </Link>
           </div>
         </div>
